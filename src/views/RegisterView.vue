@@ -17,7 +17,7 @@ export default {
 
 <style>
 .register-container{
-  width: 100%;
+  width: 100vw;
   padding: 0 100px;
 }
 

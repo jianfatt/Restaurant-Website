@@ -3,7 +3,10 @@ import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/LoginView.vue'
 import RegisterView from '../views/RegisterView.vue'
-import RestaurantView from '../views/RestaurantView.vue'
+import AddRestaurantView from '../views/AddRestaurantView.vue'
+import EditRestaurantView from '../views/EditRestaurantView.vue'
+import AllRestaurantView from '../views/AllRestaurantView.vue'
+import SingleRestaurantView from '../views/SingleRestaurantView.vue'
 import AddCategoryView from '../views/AddCategoryView.vue'
 import EditCategoryView from '../views/EditCategoryView.vue'
 import CategoryView from '../views/CategoryView.vue'
@@ -35,9 +38,24 @@ const routes = [
     component: RegisterView
   },
   {
+    path: '/all-restaurant/',
+    name: 'all-restaurant',
+    component: AllRestaurantView
+  },
+  {
+    path: '/add-restaurant',
+    name: 'add-restaurant',
+    component: AddRestaurantView
+  },
+  {
+    path: '/edit-restaurant/:id',
+    name: 'edit-restaurant',
+    component: EditRestaurantView
+  },
+  {
     path: '/restaurant/:id',
     name: 'restaurant',
-    component: RestaurantView
+    component: SingleRestaurantView
   },
   {
     path: '/add-category',

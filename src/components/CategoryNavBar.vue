@@ -1,5 +1,5 @@
 <template>
-<nav class="navbar navbar-dark navbar-expand-lg bg-dark">
+<nav class="navbar navbar-expand-lg">
   <div class="container-fluid">
     <span class="navbar-brand">Categories</span>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,11 +45,12 @@ export default {
 
 </script>
 
-<style>
+<style scoped>
 .navbar{
-    margin: 10px 50px;
+    margin: 0 0 30px 0;
     border-radius: 5px;
     font-size: 20px;
+    background-color: #e3f2fd;
 }
 
 </style>

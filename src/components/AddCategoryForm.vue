@@ -5,9 +5,6 @@
             <p class="form-label">New Category Name</p>
             <p><input type="text" v-model="categoryName" class="form-control" required></p>
 
-            <p class="form-label">Restaurant Name</p>
-            <p><input type="text" v-model="restaurantsName" class="form-control" required></p>
-
             <button class="btn btn-primary" @click="handleAddCategory()">Add</button>
 
         </div>
@@ -24,20 +21,23 @@ export default {
         return {
             category: null,
             categoryName: '',
-            restaurantsName: '',
         }
     },
     methods: {
         handleAddCategory() {
+            const headers = { 
+            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjYwNTI1Nzk4LCJleHAiOjE2NjMxMTc3OTh9.mYq36UcH2P_rYq5u9sdWSxybLJokR1IL61K-C_9ch1g',
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+        };
             axios({
                 method: 'POST',
                 url: 'http://localhost:1337/api/categories',
-                headers: {
-                    Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjYwMjkxNDkxLCJleHAiOjE2NjI4ODM0OTF9.fwUbfp6Ip8s4J_VfJZuotm_SdeRlCibBQE992GF7cYU',
-                },
+                headers: headers,
                 data: {
-                    name: this.categoryName,
-                    restaurants: this.restaurantsName,
+                    data: {
+                        name: this.categoryName
+                        }
                 }
             })
                 .then(response => {

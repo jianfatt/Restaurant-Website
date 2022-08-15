@@ -17,7 +17,7 @@ export default {
 
 <style>
 .login-container{
-  width: 100%;
+  width: 100vw;
   padding: 0 100px;
 }
 

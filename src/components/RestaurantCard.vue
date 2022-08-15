@@ -1,10 +1,12 @@
 <template>
     <div class="restaurant-card row" v-if="restaurantList">
         <div v-for="restaurants in restaurantList" class="card col">
-            <img src="#" class="card-img-top" alt="...">
+            <img src="" class="card-img-top" alt="...">
             <div class="card-body">
+                <router-link :to="{ path: 'restaurant/' + restaurants.id }"  class="restaurant-link">
                 <p class="card-text restaurants-name">{{ restaurants.attributes.name }} </p>
                 <p class="card-text restaurants-desc">{{ restaurants.attributes.description }} </p>
+                </router-link>
             </div>
         </div>
     </div>
@@ -22,16 +24,28 @@ export default {
     },
     created() {
         this.getAllRestaurant();
+        this.getRelation();
     },
     methods: {
         getAllRestaurant() {
             axios({
                 method: 'GET',
-                url: "http://localhost:1337/api/restaurants",
+                url: "http://localhost:1337/api/restaurants/",
+                
             })
                 .then(response => {
                     this.restaurantList = response.data.data;
                     console.log("All Restaurants",response.data.data);
+                })
+        },
+        getRelation(){
+            axios({
+                method: 'GET',
+                url: "http://localhost:1337/api/restaurants?populate=image",
+            })
+                .then(response => {
+                    this.restaurantList = response.data.data;
+                    console.log("All",response.data.data);
                 })
         }
     }
@@ -39,13 +53,8 @@ export default {
 </script>
 
 <style>
-.restaurant-card{
-    padding: 0 50px;
-}
-
 .card{
     margin: 10px;
-    position: relative;
 }
 
 .card-text{
@@ -60,7 +69,10 @@ export default {
 .restaurants-desc{
     font-size: 15px;
     color: gray;
-    position: absolute;
-    bottom: 10px;
+}
+
+.restaurant-link{
+    text-decoration: none;
+    color: black;
 }
 </style>
