@@ -15,12 +15,12 @@
     </tr>
   </thead>
   <tbody>
-    <tr v-for="restaurants in restaurantList">
+    <tr v-for="restaurant in restaurantList">
       <td class="table-cell counterCell " scope="row"></td>
-      <td class="table-cell restaurant-cell"><router-link :to="{ path: 'restaurant/' + restaurants.id }" class="restaurant-link">{{ restaurants.attributes.name }}</router-link></td>
+      <td class="table-cell restaurant-cell"><router-link :to="{ path: 'restaurant/' + restaurant.id }" class="restaurant-link">{{ restaurant.attributes.name }}</router-link></td>
       <td class="table-cell action-cell">
-        <router-link :to="{ path: 'edit-restaurant/' + restaurants.id }"><button class="btn btn-primary action-button">Edit</button></router-link>
-        <button class="btn btn-danger action-button" @click="handleDeleteRestaurant(restaurants)">Delete</button>
+        <router-link :to="{ path: 'edit-restaurant/' + restaurant.id }"><button class="btn btn-primary action-button">Edit</button></router-link>
+        <button class="btn btn-danger action-button" @click="handleDeleteRestaurant(restaurant)">Delete</button>
       </td>
     </tr>
   </tbody>
@@ -36,7 +36,7 @@ export default {
     data() {
         return {
                 restaurantList: [],
-                deleted:[],
+                deletedRestaurant:[],
         }
     },
     created() {
@@ -66,7 +66,7 @@ export default {
                 headers:headers,
             })
                 .then(response => {
-                    this.deleted = response;
+                    this.deleteRestaurant = response;
                     console.log("Deleted",response);
                     window.location.reload();
                 })

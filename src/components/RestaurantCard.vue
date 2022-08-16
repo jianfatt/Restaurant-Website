@@ -1,14 +1,18 @@
 <template>
-    <div class="restaurant-card row" v-if="restaurantList">
-        <div v-for="restaurants in restaurantList" class="card col">
-            <img src="" class="card-img-top" alt="...">
+    <div class="restaurant-card">
+        <router-link :to="{ path: 'restaurant/' + restaurant.id }"  class="restaurant-link">
+        <div class="card">
+            <div v-for="image in restaurant.attributes.image.data">
+                <img :src="'http://localhost:1337' + image.attributes.url" class="card-img-top" :alt="restaurant.attributes.name">
+            </div>
             <div class="card-body">
-                <router-link :to="{ path: 'restaurant/' + restaurants.id }"  class="restaurant-link">
-                <p class="card-text restaurants-name">{{ restaurants.attributes.name }} </p>
-                <p class="card-text restaurants-desc">{{ restaurants.attributes.description }} </p>
-                </router-link>
+                
+                <p class="card-text restaurant-name">{{ restaurant.attributes.name }} </p>
+                <p class="card-text restaurant-desc">{{ restaurant.attributes.description }} </p>
+               
             </div>
         </div>
+         </router-link>
     </div>
 </template>
 
@@ -17,36 +21,12 @@ const axios = require('axios').default;
 
 export default {
     name: 'card',
+    props: {
+        restaurant: Object
+    },
     data() {
         return {
-                restaurantList: [],
-        }
-    },
-    created() {
-        this.getAllRestaurant();
-        this.getRelation();
-    },
-    methods: {
-        getAllRestaurant() {
-            axios({
-                method: 'GET',
-                url: "http://localhost:1337/api/restaurants/",
-                
-            })
-                .then(response => {
-                    this.restaurantList = response.data.data;
-                    console.log("All Restaurants",response.data.data);
-                })
-        },
-        getRelation(){
-            axios({
-                method: 'GET',
-                url: "http://localhost:1337/api/restaurants?populate=image",
-            })
-                .then(response => {
-                    this.restaurantList = response.data.data;
-                    console.log("All",response.data.data);
-                })
+            
         }
     }
 }
@@ -61,12 +41,12 @@ export default {
     text-align: left;
 }
 
-.restaurants-name{
+.restaurant-name{
     font-size: 20px;
     font-weight: 700;
 }
 
-.restaurants-desc{
+.restaurant-desc{
     font-size: 15px;
     color: gray;
 }

@@ -22,7 +22,7 @@ export default {
   name: 'editRestaurantForm',
     data() {
         return {
-            restaurant: [],
+            editRestaurant: [],
             restaurantList: [],
             newRestaurantName: '',
             id:this.$route.params.id
@@ -49,7 +49,7 @@ export default {
                 }
             })
                 .then(response => {
-                    this.restaurant = response.data;
+                    this.editRestaurant = response.data;
                     console.log(response.data);
                     this.$router.push('/all-restaurant')
                 })

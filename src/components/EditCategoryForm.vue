@@ -22,7 +22,7 @@ export default {
   name: 'editCategoryForm',
     data() {
         return {
-            category: [],
+            editCategory: [],
             categoryList: [],
             newCategoryName: '',
             id:this.$route.params.id
@@ -49,7 +49,7 @@ export default {
                 }
             })
                 .then(response => {
-                    this.category = response.data;
+                    this.editCategory = response.data;
                     console.log(response.data);
                     this.$router.push('/category')
                 })

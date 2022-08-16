@@ -5,15 +5,10 @@
             <p class="form-label">New Restaurant Name</p>
             <p><input type="text" v-model="restaurantName" class="form-control" required></p>
 
-            <div class="dropdown">
-                <button class="btn dropdown-btn dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                    aria-expanded="false">
-                    Select Category
-                </button>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" v-for="categories in categoryList">{{ categories.attributes.name }}</a></li>
-                </ul>
-            </div>
+            <select class="form-select" aria-label="Default select example">
+                <option selected>Select Category</option>
+                <option v-for="category in categoryList" value="1">{{ category.attributes.name }}</option>
+            </select>
 
             <button class="btn btn-primary" @click="handleAddRestaurant()">Add</button>
 
@@ -34,7 +29,7 @@ export default {
             categoryList: [],
         }
     },
-     created() {
+    created() {
         this.getAllCategories();
     },
     methods: {
@@ -61,14 +56,14 @@ export default {
                 })
         },
 
-         getAllCategories() {
+        getAllCategories() {
             axios({
                 method: 'GET',
                 url: "http://localhost:1337/api/categories",
             })
                 .then(response => {
                     this.categoryList = response.data.data;
-                    console.log("All Categories",response.data.data);
+                    console.log("All Categories", response.data.data);
                 })
         },
     }
@@ -76,14 +71,18 @@ export default {
 </script>
 
 <style>
-.dropdown-btn{
+.dropdown-btn {
     width: 100%;
     margin: 10px 0;
     background: #e3f2fd;
     border: 1px solid #ced4da;
 }
 
-.dropdown-menu{
+.dropdown-menu {
     width: 100%;
+}
+
+.form-select{
+    margin: 20px 0;
 }
 </style>

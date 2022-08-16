@@ -15,12 +15,12 @@
     </tr>
   </thead>
   <tbody>
-    <tr v-for="categories in categoryList">
+    <tr v-for="category in categoryList">
       <td class="table-cell counterCell " scope="row"></td>
-      <td class="table-cell category-cell">{{ categories.attributes.name }}</td>
+      <td class="table-cell category-cell">{{ category.attributes.name }}</td>
       <td class="table-cell action-cell">
-        <router-link :to="{ path: 'edit-category/' + categories.id }"><button class="btn btn-primary action-button">Edit</button></router-link>
-        <button class="btn btn-danger action-button" @click="handleDeleteCategory(categories)">Delete</button>
+        <router-link :to="{ path: 'edit-category/' + category.id }"><button class="btn btn-primary action-button">Edit</button></router-link>
+        <button class="btn btn-danger action-button" @click="handleDeleteCategory(category)">Delete</button>
       </td>
     </tr>
   </tbody>
@@ -36,7 +36,7 @@ export default {
     data() {
         return {
                 categoryList: [],
-                deleted:[],
+                deleteCategory:[],
         }
     },
     created() {
@@ -66,7 +66,7 @@ export default {
                 headers:headers,
             })
                 .then(response => {
-                    this.deleted = response;
+                    this.deleteCategory = response;
                     console.log("Deleted",response);
                     window.location.reload();
                 })

@@ -1,6 +1,8 @@
 <template>
 <div class="single-restaurant">
-    <img class="cover-image" src="" alt="cover image"/>
+    <div v-for="image in imageList">
+    <img :src="'http://localhost:1337' + image.attributes.url" class="card-img-top" alt="...">
+    </div>
     <h1 class="name">{{ restaurantList.name }}</h1>
     <p class="description">{{ restaurantList.description }}</p>
     <p class="label">Operation Days</p>
@@ -21,11 +23,13 @@ export default {
     data() {
         return {
             restaurantList: [],
+            imageList: [],
             id:this.$route.params.id
         }
     },
     created() {
         this.getRestaurant();
+        this.getImage();
     },
     methods: {
          getRestaurant() {
@@ -36,6 +40,19 @@ export default {
                 .then(response => {
                     this.restaurantList = response.data.data.attributes;
                     console.log("Restaurant",response.data.data);
+                })
+        },
+         getImage() {
+            axios({
+                method: 'GET',
+                url: "http://localhost:1337/api/restaurants/"+this.id + "?",
+                params:{
+                    populate: "image"
+                }
+            })
+                .then(response => {
+                    this.imageList = response.data.data.attributes.image.data;
+                    console.log("Image",response.data.data.attributes.image.data);
                 })
         }
     }
@@ -60,4 +77,5 @@ export default {
 .label{
     font-weight: bold;
 }
+
 </style>
