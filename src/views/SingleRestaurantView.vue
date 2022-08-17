@@ -1,30 +1,49 @@
 <template>
-<div class="single-restaurant">
-    <div v-for="image in imageList">
-    <img :src="'http://localhost:1337' + image.attributes.url" class="card-img-top" alt="...">
+    <div class="single-restaurant">
+        <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active" v-for="image in imageList">
+                    <img class="image" :src="'http://localhost:1337' + image.attributes.url" alt="...">
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
+                data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
+                data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+        <div class="restaurant-info-container row">
+            <h1 class="name">{{ restaurantList.name }}</h1>
+            <p class="description">{{ restaurantList.description }}</p>
+            <p class="label col-6">Operation Days</p>
+            <p class="label col-6" style="display:block">Address
+                <br><span class="info">{{ restaurantList.address }}</span>
+            </p>
+            <p class="label col-6">Website
+                <br><span class="info">{{ restaurantList.website }}</span>
+            </p>
+            <p class="label col-6">Contact Number
+                <br><span class="info">{{ restaurantList.phone }}</span>
+            </p>
+        </div>
     </div>
-    <h1 class="name">{{ restaurantList.name }}</h1>
-    <p class="description">{{ restaurantList.description }}</p>
-    <p class="label">Operation Days</p>
-    <p class="label">Address</p>
-    <p>{{ restaurantList.address }}</p>
-    <p class="label">Website</p>
-    <p>{{ restaurantList.website }}</p>
-    <p class="label">Contact Number</p>
-    <p>{{ restaurantList.phone }}</p>
-</div>
 </template>
 
 <script>
 const axios = require('axios').default;
 
 export default {
-  name: 'editCategoryForm',
+    name: 'SingleRestaurantView',
     data() {
         return {
             restaurantList: [],
-            imageList: [],
-            id:this.$route.params.id
+            imageList: null,
+            id: this.$route.params.id
         }
     },
     created() {
@@ -32,50 +51,63 @@ export default {
         this.getImage();
     },
     methods: {
-         getRestaurant() {
+        getRestaurant() {
             axios({
                 method: 'GET',
                 url: "http://localhost:1337/api/restaurants/" + this.id,
             })
                 .then(response => {
                     this.restaurantList = response.data.data.attributes;
-                    console.log("Restaurant",response.data.data);
+                    console.log("Restaurant", response.data.data);
                 })
         },
-         getImage() {
+        getImage() {
             axios({
                 method: 'GET',
-                url: "http://localhost:1337/api/restaurants/"+this.id + "?",
-                params:{
+                url: "http://localhost:1337/api/restaurants/" + this.id + "?",
+                params: {
                     populate: "image"
                 }
             })
                 .then(response => {
                     this.imageList = response.data.data.attributes.image.data;
-                    console.log("Image",response.data.data.attributes.image.data);
+                    console.log("Image", response.data.data.attributes.image.data);
                 })
         }
     }
 }
 </script>
 
-<style>
-.single-restaurant{
-    width:100vw;
-    padding: 0 100px;
+<style  scoped>
+.single-restaurant {
+    width: 100vw;
+    height: 100vh;
     text-align: left;
 }
 
-.cover-image{
-    margin: 20px 0;
-}
-
-.description{
+.description {
     font-size: 20px;
 }
 
-.label{
+.label {
     font-weight: bold;
 }
 
+.carousel {
+    background: black;
+}
+
+.image {
+    display: block;
+    margin: auto;
+    height: 500px;
+}
+
+.restaurant-info-container {
+    padding: 50px 300px;
+}
+
+.info {
+    font-weight: 500;
+}
 </style>

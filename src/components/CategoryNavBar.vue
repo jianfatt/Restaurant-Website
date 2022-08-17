@@ -10,12 +10,13 @@
         <div class="navbar-nav">
           <ul class="nav">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">All</a>
+              <a class="nav-link active" aria-current="page" href="">All</a>
             </li>
-            <li class="nav-item" v-for="categories in categoryList">
-              <a class="nav-link" href="">{{  categories.attributes.name }}</a>
+            <li class="nav-item" v-for="category in categoryList">
+              <span class="nav-link category-link" @click="handleSelectCategory(category)">{{ category.attributes.name
+              }}</span>
             </li>
-            </ul>
+          </ul>
         </div>
       </div>
     </div>
@@ -39,14 +40,15 @@ export default {
     getAllCategories() {
       axios({
         method: 'GET',
-        url: "http://localhost:1337/api/categories",
+        url: "http://localhost:1337/api/categories"
       })
         .then(response => {
           this.categoryList = response.data.data;
-          console.log("All Categories", response.data.data);
         })
     },
-    
+    handleSelectCategory(category) {
+      this.$emit("filterCategory", category.id);
+    }
   }
 }
 
@@ -59,5 +61,9 @@ export default {
   border-radius: 5px;
   font-size: 20px;
   background-color: #e3f2fd;
+}
+
+.category-link:hover {
+  cursor: pointer;
 }
 </style>

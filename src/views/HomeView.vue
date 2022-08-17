@@ -1,11 +1,10 @@
 <template>
   <div class="home">
     <hero></hero>
-    <categoryNav></categoryNav>
+    <categoryNav @filterCategory="handleFilterCategory($event)" ></categoryNav>
     <div class="row">
-      <card class="col" :restaurant="restaurant" v-for="restaurant in restaurantList"></card>
+      <card class="col-4" :restaurant="restaurant" v-for="restaurant in restaurantList"></card>
     </div>
-
   </div>
 </template>
 
@@ -15,6 +14,7 @@ const axios = require('axios').default;
 import hero from '@/components/Hero.vue'
 import card from '@/components/RestaurantCard.vue'
 import categoryNav from '@/components/CategoryNavBar.vue'
+const qs = require('qs');
 
 export default {
   name: 'HomeView',
@@ -26,19 +26,31 @@ export default {
   data() {
     return {
       restaurantList: [],
+      categoryList:[]
     }
   },
   created() {
     this.getAllRestaurant();
   },
   methods: {
-    getAllRestaurant() {
+    getAllRestaurant(categoryId) {
+      const query = qs.stringify({
+        filters: {
+          categories: {
+            id: {
+              $eq: categoryId,
+            },
+          },
+        },
+      }, {
+        encodeValuesOnly: true,
+      });
+      
       axios({
         method: 'GET',
-        url: "http://localhost:1337/api/restaurants",
+        url: `http://localhost:1337/api/restaurants?${query}`,
         params: {
           populate: "image,categories",
-
         }
       })
         .then(response => {
@@ -46,20 +58,11 @@ export default {
           console.log("All Restaurants", response.data.data);
         })
     },
-    getRestaurants() {
-      axios({
-        method: 'GET',
-        url: "http://localhost:1337/api/categories/" + this.id + "?",
-        params: {
-          populate: "categories",
-
-        }
-      })
-        .then(response => {
-          this.item = response.data.data;
-          console.log("Restaurants in the Category", response.data.data);
-        })
-    },
+    handleFilterCategory(categoryId){
+      console.log("categoryId", categoryId)
+      this.getAllRestaurant(categoryId)
+      // this.restaurantList = filteredRestaurant;
+    }
   }
 }
 </script>
