@@ -50,7 +50,7 @@ export default {
             })
                 .then(response => {
                     this.editRestaurant = response.data;
-                    console.log(response.data);
+                    console.log('edited',response.data);
                     this.$router.push('/all-restaurant')
                 })
         },

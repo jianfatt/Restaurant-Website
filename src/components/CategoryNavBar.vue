@@ -10,7 +10,7 @@
         <div class="navbar-nav">
           <ul class="nav">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="">All</a>
+              <a class="nav-link" aria-current="page" href="">All</a>
             </li>
             <li class="nav-item" v-for="category in categoryList">
               <span class="nav-link category-link" @click="handleSelectCategory(category)">{{ category.attributes.name
@@ -58,7 +58,6 @@ export default {
 <style scoped>
 .navbar {
   margin: 0 0 30px 0;
-  border-radius: 5px;
   font-size: 20px;
   background-color: #e3f2fd;
 }
