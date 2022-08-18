@@ -61,7 +61,6 @@ export default {
 <style>
 .form {
     margin: auto;
-    padding: 80px 0;
     width: 380px;
 }
 

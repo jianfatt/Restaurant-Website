@@ -1,6 +1,6 @@
 <template>
 <div>
-<h1>Add New Category</h1>
+<h1 class="header">Add New Category</h1>
 <addCategoryForm></addCategoryForm>
 </div>
 </template>
@@ -15,3 +15,9 @@ export default {
 }
 }
 </script>
+
+<style>
+  .header{
+    text-align: center;
+  }
+</style>

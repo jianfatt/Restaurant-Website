@@ -1,5 +1,6 @@
 <template>
 <div class="register-container">
+  <h1>Register</h1>
 <registerForm></registerForm>
 </div>
 </template>
@@ -17,8 +18,7 @@ export default {
 
 <style>
 .register-container{
-  width: 100vw;
-  padding: 0 100px;
+  text-align: center;
 }
 
 </style>

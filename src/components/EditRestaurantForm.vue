@@ -38,7 +38,24 @@ export default {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
         };
-            axios({
+            if(this.newRestaurantName==''){
+                 axios({
+                method: 'PUT',
+                url: 'http://localhost:1337/api/restaurants/' + this.id,
+                headers: headers,
+                data: {
+                    data: {
+                        name: this.restaurantList.name
+                        }
+                },
+            })
+                .then(response => {
+                    console.log("edited",response.data);
+                    this.$router.push('/all-restaurant')
+                })
+            }
+            else{
+                axios({
                 method: 'PUT',
                 url: 'http://localhost:1337/api/restaurants/' + this.id,
                 headers: headers,
@@ -46,13 +63,13 @@ export default {
                     data: {
                         name: this.newRestaurantName
                         }
-                }
+                },
             })
                 .then(response => {
-                    this.editRestaurant = response.data;
-                    console.log('edited',response.data);
+                    console.log("edited",response.data);
                     this.$router.push('/all-restaurant')
                 })
+            }
         },
          getAllRestaurants() {
             axios({

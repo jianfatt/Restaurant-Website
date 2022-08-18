@@ -1,35 +1,17 @@
 <template>
-    <div class="restaurant-card">
-
-        <div class="card">
-            <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                    <div class="carousel-item active" v-for="image in restaurant.attributes.image.data">
-                        <img :src="'http://localhost:1337' + image.attributes.url" class="card-img-top"
-                            :alt="restaurant.attributes.name">
-                    </div>
+    <div class="single-restaurant-card">
+        <router-link :to="{ path: 'restaurant/' + restaurant.id }" class="restaurant-link">
+            <div class="card">
+                <div v-for="(image, index) in restaurant.attributes.image.data" v-show="index==0">
+                    <img :src="'http://localhost:1337' + image.attributes.url" class="card-img-top"
+                        :alt="restaurant.attributes.name">
                 </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
-                    data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
-                    data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
-            </div>
-            <router-link :to="{ path: 'restaurant/' + restaurant.id }" class="restaurant-link">
                 <div class="card-body">
-
                     <p class="card-text restaurant-name">{{ restaurant.attributes.name }} </p>
                     <p class="card-text restaurant-desc">{{ restaurant.attributes.description }} </p>
-
                 </div>
-            </router-link>
-        </div>
-
+            </div>
+        </router-link>
     </div>
 </template>
 
@@ -40,7 +22,7 @@ const axios = require('axios').default;
 export default {
     name: 'card',
     props: {
-        restaurant: Object
+        restaurant: Object,
     },
     data() {
         return {
@@ -51,23 +33,20 @@ export default {
 </script>
 
 <style>
-.restaurant-card {
+.card-body {
     display: flex;
-    align-items: stretch;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 150px;
+    text-align: left;
 }
 
 .card {
     margin: 10px;
-    width: 350px;
-}
-
-.card-text {
-    text-align: left;
 }
 
 .card-img-top {
-    height: 250px;
-    object-fit: cover;
+    height: 200px;
 }
 
 .restaurant-name {

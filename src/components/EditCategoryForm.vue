@@ -37,8 +37,25 @@ export default {
             'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjYwNTI1Nzk4LCJleHAiOjE2NjMxMTc3OTh9.mYq36UcH2P_rYq5u9sdWSxybLJokR1IL61K-C_9ch1g',
             'Content-Type': 'application/json',
             'Accept': 'application/json',
-        };
-            axios({
+            };
+            if(this.newCategoryName==''){
+                 axios({
+                method: 'PUT',
+                url: 'http://localhost:1337/api/categories/' + this.id,
+                headers: headers,
+                data: {
+                    data: {
+                        name: this.categoryList.name
+                        }
+                },
+            })
+                .then(response => {
+                    console.log("edited",response.data);
+                    this.$router.push('/category')
+                })
+            }
+            else{
+                axios({
                 method: 'PUT',
                 url: 'http://localhost:1337/api/categories/' + this.id,
                 headers: headers,
@@ -46,13 +63,14 @@ export default {
                     data: {
                         name: this.newCategoryName
                         }
-                }
+                },
             })
                 .then(response => {
-                    this.editCategory = response.data;
-                    console.log(response.data);
+                    console.log("edited",response.data);
                     this.$router.push('/category')
                 })
+            }
+            
         },
          getCategory() {
             axios({

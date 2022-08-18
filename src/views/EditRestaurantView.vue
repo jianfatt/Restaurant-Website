@@ -1,6 +1,6 @@
 <template>
 <div>
-<h1>Edit Restaurant</h1>
+<h1 class="header">Edit Restaurant</h1>
 <editRestaurantForm></editRestaurantForm>
 </div>
 </template>

@@ -1,5 +1,6 @@
 <template>
 <div class="login-container">
+<h1>Login</h1>
 <loginForm></loginForm>
 </div>
 </template>
@@ -17,8 +18,7 @@ export default {
 
 <style>
 .login-container{
-  width: 100vw;
-  padding: 0 100px;
+  text-align: center;
 }
 
 </style>

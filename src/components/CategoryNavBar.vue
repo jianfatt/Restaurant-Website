@@ -57,7 +57,7 @@ export default {
 
 <style scoped>
 .navbar {
-  margin: 0 0 30px 0;
+  margin: 0 10px;
   font-size: 20px;
   background-color: #e3f2fd;
 }

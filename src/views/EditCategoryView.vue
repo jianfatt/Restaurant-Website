@@ -1,6 +1,6 @@
 <template>
 <div>
-<h1>Edit Category</h1>
+<h1 class="header">Edit Category</h1>
 <editCategoryForm></editCategoryForm>
 </div>
 </template>

@@ -1,5 +1,5 @@
 <template>
-<div class="hero row">
+<div class="hero">
       <div class="col-lg-6">
         <h1 class="header">Good food choices are good investments.</h1>
         <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magnam, qui, distinctio voluptas minima vero ipsam in quo, esse modi nam corporis beatae dolore temporibus incidunt vitae ipsa maiores. Aspernatur, laboriosam.</p>
@@ -20,13 +20,20 @@ export default {
 .hero{
   display: flex;
   align-items: center;
+  justify-content: center;
   text-align: left;
   background: black;
-  padding: 0 100px;
   color: rgb(129, 129, 129);
+  margin: 0 10px;
+  padding: 0 30px;
+}
+
+.lead{
+  text-align: justify;
 }
 
 .hero-image{
+  margin: 0 10px;
   width: 570px;
   height: 350px;
 }

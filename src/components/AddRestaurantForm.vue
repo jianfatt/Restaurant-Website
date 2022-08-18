@@ -28,6 +28,7 @@
             </select>
 
             <button class="btn btn-primary" @click="handleAddRestaurant()">Add</button>
+            <p class="message error-message" v-show="errored">{{ errorMsg }}</p>
 
         </div>
 
@@ -46,7 +47,7 @@ export default {
     name: 'addRestaurantForm',
     data() {
         return {
-            restaurant: null,
+            restaurant: '',
             restaurantName: '',
             description:'',
             address:'',
@@ -55,7 +56,9 @@ export default {
             categoryName:'Select Category',
             closingDays:'Select Closing Days',
             categoryList: [],
-            dayList:[]
+            dayList:[],
+            errored: false,
+            errorMsg:'Please fill in the required information.'
         }
     },
     created() {
@@ -64,6 +67,10 @@ export default {
     },
     methods: {
         handleAddRestaurant() {
+            if(this.restaurant==''){
+                this.errored=true;
+            }
+            else{
             axios({
                 method: 'POST',
                 url: 'http://localhost:1337/api/restaurants',
@@ -85,6 +92,7 @@ export default {
                     console.log(response.data);
                     this.$router.push('/all-restaurant')
                 })
+                }
         },
 
         getAllCategories() {

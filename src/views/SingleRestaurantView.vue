@@ -2,8 +2,8 @@
     <div class="single-restaurant">
         <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
-                <div class="carousel-item active" v-for="image in imageList">
-                    <img class="image" :src="'http://localhost:1337' + image.attributes.url" alt="...">
+                <div class="carousel-item" :class="{ active: image.attributes.isDefaultImage == true }" v-for="image in imageList">
+                    <img class="image" :src="'http://localhost:1337' + image.attributes.url" :alt="restaurantList.name">
                 </div>
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
@@ -20,7 +20,7 @@
         <div class="restaurant-info-container row">
             <h1 class="name">{{ restaurantList.name }}</h1>
             <p class="description">{{ restaurantList.description }}</p>
-            <p class="label col-6">Operation Days
+            <p class="label col-6">Closing Days
                 <br><span class="info" v-for="day in dayList">{{ day.attributes.day }}</span>
             </p>
             <p class="label col-6" style="display:block">Address
@@ -49,7 +49,8 @@ export default {
     data() {
         return {
             restaurantList: [],
-            imageList: null,
+            test:null,
+            imageList: [],
             dayList: null,
             id: this.$route.params.id
         }
@@ -80,6 +81,7 @@ export default {
             })
                 .then(response => {
                     this.imageList = response.data.data.attributes.image.data;
+                    this.imageList[0].attributes.isDefaultImage = true;
                     this.dayList = response.data.data.attributes.closingDays.data;
                     console.log("Image", response.data.data.attributes.image.data);
                     console.log("Days", response.data.data.attributes.closingDays.data);

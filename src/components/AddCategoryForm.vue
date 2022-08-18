@@ -49,3 +49,9 @@ export default {
     }
 }
 </script>
+
+<style>
+.form{
+    text-align: center;
+}
+</style>

@@ -85,7 +85,8 @@ export default {
 
 .table {
   margin: 20px 0;
-    counter-reset: tableCount;    
+  counter-reset: tableCount;
+  text-align: center;    
 }
 
 .table-cell{
@@ -108,7 +109,7 @@ export default {
 
 .table-text{
   font-weight: bold;
-  text-align: left;
+  text-align: center;
 }
 
 .title{
