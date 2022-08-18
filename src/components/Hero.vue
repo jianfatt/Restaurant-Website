@@ -1,7 +1,7 @@
 <template>
 <div class="hero">
       <div class="col-lg-6">
-        <h1 class="header">Good food choices are good investments.</h1>
+        <h1 class="hero-title">Good food choices are good investments.</h1>
         <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magnam, qui, distinctio voluptas minima vero ipsam in quo, esse modi nam corporis beatae dolore temporibus incidunt vitae ipsa maiores. Aspernatur, laboriosam.</p>
       </div>
       <div class="col-10 col-sm-8 col-lg-6">
@@ -21,11 +21,14 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  text-align: left;
   background: black;
   color: rgb(129, 129, 129);
   margin: 0 10px;
   padding: 0 30px;
+}
+
+.hero-title{
+  text-align: left;
 }
 
 .lead{
