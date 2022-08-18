@@ -6,6 +6,7 @@
             <p><input type="text" v-model="categoryName" class="form-control" required></p>
 
             <button class="btn btn-primary" @click="handleAddCategory()">Add</button>
+            <p class="message error-message" v-show="errored">{{ errorMsg }}</p>
 
         </div>
 
@@ -21,6 +22,8 @@ export default {
         return {
             category: null,
             categoryName: '',
+            errored: false,
+            errorMsg:'New Category name is required.'
         }
     },
     methods: {
@@ -30,6 +33,10 @@ export default {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
         };
+         if(this.categoryName==''){
+                this.errored=true;
+            }
+            else{
             axios({
                 method: 'POST',
                 url: 'http://localhost:1337/api/categories',
@@ -45,6 +52,7 @@ export default {
                     console.log(response.data);
                     this.$router.push('/category')
                 })
+            }
         }
     }
 }
