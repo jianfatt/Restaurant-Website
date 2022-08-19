@@ -23,12 +23,12 @@ export default {
   justify-content: center;
   background: black;
   color: rgb(129, 129, 129);
-  margin: 0 10px;
   padding: 0 30px;
 }
 
 .hero-title{
   text-align: left;
+  color: white;
 }
 
 .lead{

@@ -1,5 +1,5 @@
 <template>
-<div class="register-container">
+<div class="form-container">
   <h1>Register</h1>
 <registerForm></registerForm>
 </div>
@@ -15,10 +15,3 @@ export default {
   }
 }
 </script>
-
-<style>
-.register-container{
-  text-align: center;
-}
-
-</style>

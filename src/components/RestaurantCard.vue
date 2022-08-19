@@ -46,6 +46,7 @@ export default {
 }
 
 .card-img-top {
+    object-fit:cover;
     height: 200px;
 }
 

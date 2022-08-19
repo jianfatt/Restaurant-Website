@@ -22,7 +22,7 @@
         <div class="restaurant-info-container row">
             <h1 class="name">{{ restaurantList.name }}</h1>
             <p class="description">{{ restaurantList.description }}</p>
-            <p class="label col-6">Closing Days
+             <p class="label col-6">Closing Days
                 <br><span class="info" v-for="day in dayList">{{ day.attributes.day }}</span>
             </p>
             <p class="label col-6">Address
@@ -89,7 +89,7 @@ export default {
         return {
             restaurantList: [],
             imageList: [],
-            dayList: null,
+            dayList: [],
             menuList: [],
             id: this.$route.params.id
         }
@@ -109,11 +109,11 @@ export default {
             })
                 .then(response => {
                     this.restaurantList = response.data.data.attributes;
+                    this.dayList = response.data.data.attributes.closingDays.data;
                     this.imageList = response.data.data.attributes.image.data;
                     this.imageList[0].attributes.isDefaultImage = true;
                     this.menuList = response.data.data.attributes.menu.data;
                     this.menuList[0].attributes.isDefaultMenu = true;
-                    this.dayList = response.data.data.attributes.closingDays.data;
                     console.log("Restaurant", response.data.data);
                     console.log("Image", response.data.data.attributes.image.data);
                     console.log("Menu", response.data.data.attributes.menu.data);

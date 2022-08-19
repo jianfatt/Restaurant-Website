@@ -57,9 +57,12 @@ export default {
 
 <style scoped>
 .navbar {
-  margin: 0 10px;
   font-size: 20px;
-  background-color: #e3f2fd;
+  background-color: gray;
+}
+
+.nav-link{
+  color:white
 }
 
 .category-link:hover {

@@ -1,37 +1,39 @@
 <template>
     <div class="form AddRestaurantForm">
+        <form action="/all-restaurant">
+            <div class="input-box">
+                <p class="form-label">Restaurant Name</p>
+                <input type="text" v-model.trim="restaurantName" class="form-control" required>
+                <span class="message error-message" v-show="errored">Restaurant Name is required</span>
 
-        <div class="input-box">
-            <p class="form-label">Restaurant Name</p>
-            <p><input type="text" v-model="restaurantName" class="form-control" required></p>
+                <p class="form-label">Description</p>
+                <input type="text" v-model.trim="description" class="form-control">
 
-            <p class="form-label">Description</p>
-            <p><input type="text" v-model="description" class="form-control" required></p>
+                <p class="form-label">Address</p>
+                <input type="text" v-model.trim="address" class="form-control" required>
+                <span class="message error-message" v-show="errored">Address is required</span>
 
-            <p class="form-label">Address</p>
-            <p><input type="text" v-model="address" class="form-control" required></p>
+                <p class="form-label">Phone</p>
+                <input type="text" v-model.trim="phone" class="form-control">
 
-            <p class="form-label">Phone</p>
-            <p><input type="text" v-model="phone" class="form-control" required></p>
+                <p class="form-label">Website</p>
+                <input type="text" v-model.trim="website" class="form-control">
 
-            <p class="form-label">Website</p>
-            <p><input type="text" v-model="website" class="form-control" required></p>
+                <p class="form-label">Category</p>
+                <select class="form-select" v-model="categoryName" aria-label="Default select example">
+                    <option :value="null" selected>Select Category</option>
+                    <option v-for="category in categoryList" v-bind:value="category">{{ category.attributes.name }}</option>
+                </select>
 
-            <select class="form-select" v-model="categoryName" aria-label="Default select example">
-                <option selected>Select Category</option>
-                <option selected v-for="category in categoryList" value="1">{{ category.attributes.name }}</option>
-            </select>
+                <p class="form-label">Closing Days</p>
+                <select class="form-select" v-model="closingDays" aria-label="Default select example">
+                    <option :value="null" selected>Select Closing Days</option>
+                    <option v-for="day in dayList" v-bind:value="day">{{ day.attributes.day }}</option>
+                </select>
 
-            <select class="form-select" v-model="closingDays" aria-label="Default select example">
-                <option selected>Select Closing Days</option>
-                <option selected v-for="day in dayList" value="1">{{ day.attributes.day }}</option>
-            </select>
-
-            <button class="btn btn-primary" @click="handleAddRestaurant()">Add</button>
-            <p class="message error-message" v-show="errored">{{ errorMsg }}</p>
-
-        </div>
-
+                <input class="btn btn-primary" type="submit" @click="handleAddRestaurant($event)">
+            </div>
+        </form>
     </div>
 </template>
 
@@ -47,18 +49,17 @@ export default {
     name: 'addRestaurantForm',
     data() {
         return {
-            restaurant: '',
+            newRestaurant: '',
             restaurantName: '',
             description:'',
             address:'',
             phone:'',
             website:'',
-            categoryName:'Select Category',
-            closingDays:'Select Closing Days',
+            categoryName: null,
+            closingDays: null,
             categoryList: [],
             dayList:[],
-            errored: false,
-            errorMsg:'Please fill in the required information.'
+            errored:false,
         }
     },
     created() {
@@ -66,12 +67,13 @@ export default {
         this.getAllDays();
     },
     methods: {
-        handleAddRestaurant() {
-            if(this.restaurant==''){
-                this.errored=true;
+        handleAddRestaurant(event) {
+            event.preventDefault()
+            if(this.restaurantName=='' || this.address ==''){
+                this.errored = true
             }
             else{
-            axios({
+                axios({
                 method: 'POST',
                 url: 'http://localhost:1337/api/restaurants',
                 headers: headers,
@@ -88,11 +90,10 @@ export default {
                 }
             })
                 .then(response => {
-                    this.restaurant = response.data;
-                    console.log(response.data);
-                    this.$router.push('/all-restaurant')
+                    this.newRestaurant = response.data.data;
+                    console.log(response.data.data);
                 })
-                }
+            }
         },
 
         getAllCategories() {

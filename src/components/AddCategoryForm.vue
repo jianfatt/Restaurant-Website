@@ -3,7 +3,7 @@
 
         <div class="input-box">
             <p class="form-label">New Category Name</p>
-            <p><input type="text" v-model="categoryName" class="form-control" required></p>
+            <p><input type="text" v-model.trim="categoryName" class="form-control"  required></p>
 
             <button class="btn btn-primary" @click="handleAddCategory()">Add</button>
             <p class="message error-message" v-show="errored">{{ errorMsg }}</p>
@@ -23,7 +23,7 @@ export default {
             category: null,
             categoryName: '',
             errored: false,
-            errorMsg:'New Category name is required.'
+            errorMsg:'New Category name is required.',
         }
     },
     methods: {
@@ -33,7 +33,7 @@ export default {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
         };
-         if(this.categoryName==''){
+         if(this.categoryName== ''){
                 this.errored=true;
             }
             else{

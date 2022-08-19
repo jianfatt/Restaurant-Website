@@ -6,7 +6,7 @@
             <p class="current-category">{{ categoryList.name }}</p>
 
             <p class="form-label">New Category Name</p>
-            <p><input type="text" v-model="newCategoryName" class="form-control" required></p>
+            <p><input type="text" v-model.trim="newCategoryName" class="form-control" required></p>
 
             <button class="btn btn-primary" @click="handleEditCategory()">Save</button>
 

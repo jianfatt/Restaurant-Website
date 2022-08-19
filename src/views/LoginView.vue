@@ -1,5 +1,5 @@
 <template>
-<div class="login-container">
+<div class="form-container">
 <h1>Login</h1>
 <loginForm></loginForm>
 </div>
@@ -17,8 +17,9 @@ export default {
 </script>
 
 <style>
-.login-container{
+.form-container{
   text-align: center;
+  margin: 50px 0;
 }
 
 </style>

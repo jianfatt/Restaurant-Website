@@ -1,21 +1,24 @@
 <template>
     <div class="form loginForm">
 
-            <div class="input-box">
-                <p class="form-label">Username</p>
-                <p><input type="text" v-model="username" class="form-control" required></p>
+        <div class="input-box">
+            <p class="form-label">Username</p>
+            <p><input type="text" v-model="username" class="form-control" required></p>
 
-                <p class="form-label">Password</p>
-                <p><input type="password" v-model="password" class="form-control" required></p>
+            <p class="form-label">Password</p>
+            <p><input type="password" v-model="password" class="form-control" required></p>
 
-                <p class="message account-recovery"><a class="link account-recovery-link" href="#">Forgot Username / Password?</a></p>
+            <p class="message account-recovery"><a class="link account-recovery-link" href="#">Forgot Username /
+                    Password?</a></p>
 
-                <button class="btn btn-primary" @click="handleLogin()">Login</button>
+            <button class="btn btn-primary" @click="handleLogin()">Login</button>
 
-                </div>
+        </div>
 
-                <p class="message hint-message">Don't have an account?<router-link :to="{ path: '/register'}" class="link hint-link" > Register </router-link></p>
-                <span class="message error-message" v-show="errored">{{ errorMsg }}</span>
+        <p class="message hint-message">Don't have an account?<router-link :to="{ path: '/register' }"
+                class="link hint-link"> Register </router-link>
+        </p>
+        <span class="message error-message" v-show="errored">{{ errorMsg }}</span>
 
     </div>
 </template>
@@ -31,7 +34,7 @@ export default {
             username: '',
             password: '',
             errored: false,
-            errorMsg:'Invalid username or password. Please try again.'
+            errorMsg: 'Invalid username or password. Please try again.'
         }
     },
     methods: {
@@ -45,7 +48,7 @@ export default {
                 }
             })
                 .then(response => {
-                    this.account = response.data;
+                    this.account = response.data
                     console.log(response.data);
                     this.$router.push('/')
                 })
@@ -64,7 +67,7 @@ export default {
     width: 380px;
 }
 
-.input-box{
+.input-box {
     padding: 30px;
     border-radius: 5px;
     box-shadow: 0 1px 3px 0 rgb(0 0 0 / 10%), 0 1px 2px 0 rgb(0 0 0 / 6%);
@@ -83,18 +86,17 @@ export default {
     width: 320px;
 }
 
-.message{
+.message {
     padding: 10px 0;
     text-align: left;
     font-size: 13px;
 }
 
-.hint-message{
+.hint-message {
     text-align: center;
 }
 
-.error-message{
+.error-message {
     color: red
 }
-
 </style>
