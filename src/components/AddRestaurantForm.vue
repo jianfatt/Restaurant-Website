@@ -2,22 +2,27 @@
     <div class="form AddRestaurantForm">
         <form action="/all-restaurant">
             <div class="input-box">
-                <p class="form-label">Restaurant Name</p>
+                <p class="form-label">Restaurant Name <span class="hint">*</span>
                 <input type="text" v-model.trim="restaurantName" class="form-control" required>
-                <span class="message error-message" v-show="errored">Restaurant Name is required</span>
+                <!-- <span class="message error-message" v-show="errored">* Restaurant Name is required</span> -->
+                </p>
 
-                <p class="form-label">Description</p>
+                <p class="form-label">Description
                 <input type="text" v-model.trim="description" class="form-control">
+                </p>
 
-                <p class="form-label">Address</p>
+                <p class="form-label">Address <span class="hint">*</span>
                 <input type="text" v-model.trim="address" class="form-control" required>
-                <span class="message error-message" v-show="errored">Address is required</span>
+                <!-- <span class="message error-message" v-show="errored">* Address is required</span> -->
+                </p>
 
-                <p class="form-label">Phone</p>
+                <p class="form-label">Phone
                 <input type="text" v-model.trim="phone" class="form-control">
+                </p>
 
-                <p class="form-label">Website</p>
+                <p class="form-label">Website
                 <input type="text" v-model.trim="website" class="form-control">
+                </p>
 
                 <p class="form-label">Category</p>
                 <select class="form-select" v-model="categoryName" aria-label="Default select example">
@@ -31,7 +36,7 @@
                     <option v-for="day in dayList" v-bind:value="day">{{ day.attributes.day }}</option>
                 </select>
 
-                <input class="btn btn-primary" type="submit" @click="handleAddRestaurant($event)">
+                <input class="btn btn-primary" type="submit" @click="handleAddRestaurant()" value="Add">
             </div>
         </form>
     </div>
@@ -67,8 +72,7 @@ export default {
         this.getAllDays();
     },
     methods: {
-        handleAddRestaurant(event) {
-            event.preventDefault()
+        handleAddRestaurant() {
             if(this.restaurantName=='' || this.address ==''){
                 this.errored = true
             }
@@ -135,5 +139,11 @@ export default {
 
 .form-select{
     margin: 20px 0;
+}
+
+.hint{
+    display: inline-block;
+    vertical-align: text-top;
+    color: red;
 }
 </style>

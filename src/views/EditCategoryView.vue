@@ -1,5 +1,6 @@
 <template>
-<div>
+<div class="crud-page">
+<p class="back"><router-link class="back-link" :to="{ path: '/category' }">Back</router-link></p>
 <h1 class="header">Edit Category</h1>
 <editCategoryForm></editCategoryForm>
 </div>

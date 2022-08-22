@@ -1,15 +1,21 @@
 <template>
     <div class="form AddCategoryForm">
 
+        <form action="/category">
         <div class="input-box">
             <p class="form-label">New Category Name</p>
-            <p><input type="text" v-model.trim="categoryName" class="form-control"  required></p>
+            <p><input type="text" v-model.trim="categoryName" class="form-control" required></p>
 
-            <button class="btn btn-primary" @click="handleAddCategory()">Add</button>
-            <p class="message error-message" v-show="errored">{{ errorMsg }}</p>
+            <p class="form-label">Restaurant</p>
+                <select class="form-select" v-model="restaurantName" aria-label="Default select example">
+                    <option :value="null" selected>Select Restaurant</option>
+                    <option v-for="restaurant in restaurantList" v-bind:value="restaurant">{{ restaurant.attributes.name }}</option>
+                </select>
+
+            <input class="btn btn-primary" type="submit" @click="handleAddCategory()" value="Add">
 
         </div>
-
+        </form>
     </div>
 </template>
 
@@ -22,9 +28,13 @@ export default {
         return {
             category: null,
             categoryName: '',
+            restaurantName:null,
+            restaurantList:[],
             errored: false,
-            errorMsg:'New Category name is required.',
         }
+    },
+    created(){
+        this.getAllRestaurants();
     },
     methods: {
         handleAddCategory() {
@@ -43,17 +53,28 @@ export default {
                 headers: headers,
                 data: {
                     data: {
-                        name: this.categoryName
+                        name: this.categoryName,
+                        restaurants: this.restaurantName
                         }
                 }
             })
                 .then(response => {
-                    this.category = response.data;
-                    console.log(response.data);
-                    this.$router.push('/category')
+                    this.category = response.data.data;
+                    console.log(response.data.data);
+                    //this.$router.push('/category')
                 })
             }
-        }
+        },
+         getAllRestaurants() {
+            axios({
+                method: 'GET',
+                url: 'http://localhost:1337/api/restaurants',
+            })
+                .then(response => {
+                    this.restaurantList = response.data.data;
+                    console.log("All Restaurants", response.data.data);
+                })
+        },
     }
 }
 </script>

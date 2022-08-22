@@ -2,9 +2,11 @@
     <div class="single-restaurant-card">
         <router-link :to="{ path: 'restaurant/' + restaurant.id }" class="restaurant-link">
             <div class="card">
-                <div v-for="(image, index) in restaurant.attributes.image.data" v-show="index==0">
-                    <img :src="'http://localhost:1337' + image.attributes.url" class="card-img-top"
-                        :alt="restaurant.attributes.name">
+                <div v-for="(image,index) in restaurant.attributes.image.data" v-show="index==0">
+                    <img :src="'http://localhost:1337' + image.attributes.url" class="card-img-top" :alt="restaurant.attributes.name">
+                </div>
+                 <div v-if="restaurant.attributes.image.data == null">
+                    <img class="card-img-top" src="@/assets/defaultImage.png" alt="restaurantList.name">
                 </div>
                 <div class="card-body">
                     <p class="card-text restaurant-name">{{ restaurant.attributes.name }} </p>
@@ -28,11 +30,15 @@ export default {
         return {
 
         }
-    }
+    },
 }
 </script>
 
 <style>
+.restaurant-card{
+    background-image: linear-gradient(to right, #434343, #000000);
+}
+
 .card-body {
     display: flex;
     flex-direction: column;
@@ -42,7 +48,7 @@ export default {
 }
 
 .card {
-    margin: 10px;
+    margin: 20px;
 }
 
 .card-img-top {

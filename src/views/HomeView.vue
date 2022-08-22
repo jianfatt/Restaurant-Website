@@ -3,7 +3,7 @@
     <hero></hero>
     <categoryNav @filterCategory="handleFilterCategory($event)" ></categoryNav>
     <div class="restaurant-card row">
-      <card class="col-4" :restaurant="restaurant" v-for="restaurant in restaurantList"></card>
+      <card class="col-12 col-lg-4" :restaurant="restaurant" v-for="restaurant in restaurantList"></card>
     </div>
   </div>
 </template>
@@ -74,6 +74,6 @@ export default {
 }
 
 .restaurant-card{
-  padding: 0 100px;
+  width: 100vw;
 }
 </style>
