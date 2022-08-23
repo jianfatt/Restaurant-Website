@@ -1,6 +1,7 @@
 <template>
     <div class="form EditCategoryForm">
 
+        <form action="/category">
         <div class="input-box">
             <p class="form-label">Current Category Name</p>
             <p class="current-category">{{ categoryList.name }}</p>
@@ -8,10 +9,16 @@
             <p class="form-label">New Category Name</p>
             <p><input type="text" v-model.trim="newCategoryName" class="form-control" required></p>
 
-            <button class="btn btn-primary" @click="handleEditCategory()">Save</button>
+             <p class="form-label">Restaurant
+                <select class="form-select" v-model="restaurantName" aria-label="Default select example">
+                    <option :value="null" selected>Select Restaurant</option>
+                    <option v-for="restaurant in restaurantList" v-bind:value="restaurant">{{ restaurant.attributes.name }}</option>
+                </select>
+                </p>
 
+            <input class="btn btn-primary" type="submit" @click="handleEditCategory()" value="Save">
         </div>
-
+        </form>
     </div>
 </template>
 
@@ -25,11 +32,14 @@ export default {
             editCategory: [],
             categoryList: [],
             newCategoryName: '',
-            id:this.$route.params.id
+            restaurantName:null,
+            id:this.$route.params.id,
+            errored:false
         }
     },
     created() {
         this.getCategory();
+        this.getAllRestaurants();
     },
     methods: {
         handleEditCategory() {
@@ -39,20 +49,7 @@ export default {
             'Accept': 'application/json',
             };
             if(this.newCategoryName==''){
-                 axios({
-                method: 'PUT',
-                url: 'http://localhost:1337/api/categories/' + this.id,
-                headers: headers,
-                data: {
-                    data: {
-                        name: this.categoryList.name
-                        }
-                },
-            })
-                .then(response => {
-                    console.log("edited",response.data);
-                    this.$router.push('/category')
-                })
+                this.errored = true
             }
             else{
                 axios({
@@ -61,13 +58,13 @@ export default {
                 headers: headers,
                 data: {
                     data: {
-                        name: this.newCategoryName
+                        name: this.newCategoryName,
+                        restaurants: this.restaurantName
                         }
                 },
             })
                 .then(response => {
                     console.log("edited",response.data);
-                    this.$router.push('/category')
                 })
             }
             
@@ -81,7 +78,17 @@ export default {
                     this.categoryList = response.data.data.attributes;
                     console.log("Categories",response.data.data);
                 })
-        }
+        },
+         getAllRestaurants() {
+            axios({
+                method: 'GET',
+                url: 'http://localhost:1337/api/restaurants',
+            })
+                .then(response => {
+                    this.restaurantList = response.data.data;
+                    console.log("All Restaurants", response.data.data);
+                })
+        },
     }
 }
 </script>

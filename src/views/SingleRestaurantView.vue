@@ -1,11 +1,11 @@
 <template>
     <div class="single-restaurant">
-        <div id="carouselExampleControls1" class="carousel slide restaurant-carousel" data-bs-ride="carousel">
+        <img v-if="imageList==null" class="restaurant-carousel-image default-image img-fluid" src="@/assets/defaultImage.png" :alt="restaurantList.name">
+        <div v-else id="carouselExampleControls1" class="carousel slide restaurant-carousel" data-bs-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item" :class="{ active: image.attributes.isFirstImage == true }" v-for="image in imageList">
                     <img class="restaurant-carousel-image img-fluid" :src="'http://localhost:1337' + image.attributes.url" :alt="restaurantList.name">
                 </div>
-                   <img v-show="errored" class="restaurant-carousel-image default-image img-fluid" src="@/assets/defaultImage.png" :alt="restaurantList.name">
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls1"
                 data-bs-slide="prev">
@@ -92,7 +92,7 @@ export default {
             dayList: [],
             menuList: [],
             id: this.$route.params.id,
-            errored: false
+            errored:false
         }
     },
     created() {
@@ -112,17 +112,11 @@ export default {
                     this.restaurantList = response.data.data.attributes;
                     this.dayList = response.data.data.attributes.closingDays.data;
                     this.imageList = response.data.data.attributes.image.data;
-                    if(this.imageList==null){
-                        this.errored = true
-                    }if(this.imageList!=null){
-                        this.errored = false
+                    if(this.imageList!=null){
                         this.imageList[0].attributes.isFirstImage = true;
                     }
                     this.menuList = response.data.data.attributes.menu.data;
-                    if(this.menuList==null){
-                        this.errored =true
-                    }if(this.menuList!=null){
-                        this.errored = false
+                    if(this.menuList!=null){
                         this.menuList[0].attributes.isFirstMenu = true;
                     }
                     console.log("Restaurant", response.data.data);

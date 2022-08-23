@@ -1,6 +1,6 @@
 <template>
 <div class="crud-page">
-<p class="back"><router-link class="back-link" :to="{ path: '/all-restaurant' }">Back</router-link></p>
+<router-link class="btn btn-sm btn-outline-dark back back-link" :to="{ path: '/all-restaurant' }">Back</router-link>
 <h1 class="header">Edit Restaurant</h1>
 <editRestaurantForm></editRestaurantForm>
 </div>
@@ -28,6 +28,12 @@ export default {
 }
 
 .back-link{
+  display: block;
+  color: black;
   text-decoration: none;
+}
+
+.back-link:hover{
+  color: white;
 }
 </style>

@@ -3,10 +3,10 @@
 
         <div class="input-box">
             <p class="form-label">Username</p>
-            <p><input type="text" v-model="username" class="form-control" required></p>
+            <p><input type="text" v-model="username" class="form-control"></p>
 
             <p class="form-label">Password</p>
-            <p><input type="password" v-model="password" class="form-control" required></p>
+            <p><input type="password" v-model="password" class="form-control"></p>
 
             <p class="message account-recovery"><a class="link account-recovery-link" href="#">Forgot Username /
                     Password?</a></p>

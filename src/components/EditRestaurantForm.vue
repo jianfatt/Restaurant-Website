@@ -15,7 +15,7 @@
                 </p>
 
                 <p class="form-label">Address <span class="hint">*</span>
-                <input type="text" v-model.trim="address" class="form-control" required>
+                <input type="text" v-model.trim="address" class="form-control">
                 </p>
 
                 <p class="form-label">Phone
