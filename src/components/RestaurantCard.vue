@@ -9,8 +9,10 @@
                     <img class="card-img-top" src="@/assets/defaultImage.png" alt="restaurantList.name">
                 </div>
                 <div class="card-body">
-                    <p class="card-text restaurant-name">{{ restaurant.attributes.name }} </p>
-                    <p class="card-text restaurant-desc">{{ restaurant.attributes.description }} </p>
+                    <p v-if="restaurant.attributes.name.length<25" class="card-text restaurant-name">{{ restaurant.attributes.name }} </p>
+                    <p v-else class="card-text restaurant-name">{{ restaurant.attributes.name.substring(0,15)+"..." }} </p>
+                    <p v-if="restaurant.attributes.description==''" class="card-text restaurant-desc">No description</p>
+                    <p v-else class="card-text restaurant-desc">{{ restaurant.attributes.description }} </p>
                 </div>
             </div>
         </router-link>
@@ -35,15 +37,9 @@ export default {
 </script>
 
 <style>
-.restaurant-card{
-    background-image: linear-gradient(to right, #434343, #000000);
-}
-
 .card-body {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    height: 150px;
     text-align: left;
 }
 

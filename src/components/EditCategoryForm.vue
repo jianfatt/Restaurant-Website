@@ -3,11 +3,9 @@
 
         <form action="/category">
         <div class="input-box">
-            <p class="form-label">Current Category Name</p>
-            <p class="current-category">{{ categoryList.name }}</p>
 
             <p class="form-label">New Category Name</p>
-            <p><input type="text" v-model.trim="newCategoryName" class="form-control" required></p>
+            <p><input type="text" v-model.trim="categoryList.name" class="form-control" required></p>
 
              <p class="form-label">Restaurant
                 <select class="form-select" v-model="restaurantName" aria-label="Default select example">
@@ -31,6 +29,7 @@ export default {
         return {
             editCategory: [],
             categoryList: [],
+            restaurantList:[],
             newCategoryName: '',
             restaurantName:null,
             id:this.$route.params.id,
@@ -48,7 +47,7 @@ export default {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
             };
-            if(this.newCategoryName==''){
+            if(this.categoryList.name==''){
                 this.errored = true
             }
             else{
@@ -58,7 +57,7 @@ export default {
                 headers: headers,
                 data: {
                     data: {
-                        name: this.newCategoryName,
+                        name: this.categoryList.name,
                         restaurants: this.restaurantName
                         }
                 },

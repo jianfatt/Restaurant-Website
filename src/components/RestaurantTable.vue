@@ -11,6 +11,9 @@
     <tr>
       <th class="table-cell" scope="col">No.</th>
       <th class="table-cell" scope="col">Restaurant Name</th>
+      <th class="table-cell" scope="col">Address</th>
+      <th class="table-cell" scope="col">Website</th>
+      <th class="table-cell" scope="col">Phone</th>
       <th class="table-cell" scope="col">Action</th>
     </tr>
   </thead>
@@ -18,6 +21,11 @@
     <tr v-for="restaurant in restaurantList">
       <td class="table-cell counterCell " scope="row"></td>
       <td class="table-cell restaurant-cell"><router-link :to="{ path: 'restaurant/' + restaurant.id }" class="restaurant-link">{{ restaurant.attributes.name }}</router-link></td>
+      <td class="table-cell restaurant-cell"><router-link :to="{ path: 'restaurant/' + restaurant.id }" class="restaurant-link">{{ restaurant.attributes.address }}</router-link></td>
+      <td v-if="restaurant.attributes.website==''" class="table-cell restaurant-cell"><router-link :to="{ path: 'restaurant/' + restaurant.id }" class="restaurant-link">N/A</router-link></td>
+      <td v-else class="table-cell restaurant-cell website-cell"><router-link :to="{ path: 'restaurant/' + restaurant.id }" class="restaurant-link">{{ restaurant.attributes.website }}</router-link></td>
+      <td v-if="restaurant.attributes.phone==''" class="table-cell restaurant-cell"><router-link :to="{ path: 'restaurant/' + restaurant.id }" class="restaurant-link">N/A</router-link></td>
+      <td v-else class="table-cell restaurant-cell"><router-link :to="{ path: 'restaurant/' + restaurant.id }" class="restaurant-link">{{ restaurant.attributes.phone }}</router-link></td>
       <td class="table-cell action-cell">
         <router-link :to="{ path: 'edit-restaurant/' + restaurant.id }"><button class="btn btn-primary action-button">Edit</button></router-link>
         <button class="btn btn-danger action-button" @click="handleDeleteRestaurant(restaurant)">Delete</button>
@@ -77,6 +85,8 @@ export default {
 
 <style>
 .restaurant-cell{
-  width: 800px;
+  text-align: center;
+  width: 200px;
 }
+
 </style>

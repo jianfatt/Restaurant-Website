@@ -1,5 +1,7 @@
 <template>
   <div class="form AddRestaurantForm">
+
+    <form @submit.prevent="handleAddRestaurant()">
     <div class="input-box">
       <p class="form-label">
         Restaurant Name <span class="hint">*</span>
@@ -64,16 +66,16 @@
 
       <p class="form-label">
         Upload Image
-        <input type="file" v-bind:value="image" @change="onFileSelected" />
+        <input type="file" v-bind:value="image" @change="onFileSelected"/>
       </p>
 
       <input
         class="btn btn-primary"
         type="submit"
-        @click="handleAddRestaurant()"
         value="Add"
       />
     </div>
+    </form>
   </div>
 </template>
 
@@ -115,9 +117,7 @@ export default {
       this.files = event.target.files[0];
     },
     handleAddRestaurant() {
-      if (this.restaurantName == "" || this.address == "") {
-        this.errored = true;
-      } else {
+      if (this.files) {
         formData.append("image", this.files);
         axios({
           method: "POST",
@@ -131,8 +131,16 @@ export default {
             files: this.files,
           },
         }).then((response) => {
-          this.newUpload = response.data[0];
-          axios({
+            this.newUpload = response.data[0];
+            this.CreateNewRestaurant();
+            console.log("New Upload", response.data[0]);
+        });
+      } else {
+          this.CreateNewRestaurant();
+      }
+    },
+    CreateNewRestaurant(){
+      axios({
             method: "POST",
             url: "http://localhost:1337/api/restaurants",
             headers: headers,
@@ -149,12 +157,9 @@ export default {
             },
           }).then((response) => {
             this.newRestaurant = response.data.data;
-            console.log("New Restaurant", response.data.data);
-          }),
-            console.log("New Upload", response.data[0]);
             this.$router.push("/all-restaurant")
-        });
-      }
+            console.log("New Restaurant", response.data.data);
+          })
     },
     getAllCategories() {
       axios({

@@ -71,6 +71,7 @@
                         </div>
                     </div>
                 </div>
+                <p  class="col-lg-9"><router-link class="btn btn-sm btn-primary" :to="{ path: '/edit-restaurant/' + restaurant.id }">Edit</router-link></p>
     </div>
     </div>
 </template>
@@ -88,6 +89,7 @@ export default {
     data() {
         return {
             restaurantList: [],
+            restaurant:[],
             imageList: [],
             dayList: [],
             menuList: [],
@@ -97,6 +99,7 @@ export default {
     },
     created() {
         this.getRestaurantInfo();
+        this.getAllRestaurant();
     },
     methods: {
         getRestaurantInfo() {
@@ -123,6 +126,17 @@ export default {
                     console.log("Image", response.data.data.attributes.image.data);
                     console.log("Menu", response.data.data.attributes.menu.data);
                     console.log("Days", response.data.data.attributes.closingDays.data);
+                })
+        },
+        getAllRestaurant() {
+            axios({
+                method: 'GET',
+                url: "http://localhost:1337/api/restaurants/" + this.id,
+            })
+                .then(response => {
+                    this.restaurant = response.data.data;
+                    console.log("aa", response.data.data);
+
                 })
         },
     }

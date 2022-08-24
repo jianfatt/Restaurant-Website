@@ -2,6 +2,7 @@
   <div class="home">
     <hero></hero>
     <categoryNav @filterCategory="handleFilterCategory($event)" ></categoryNav>
+    <h1 v-if="restaurantList==''" class="default-message">No restaurant available yet</h1>
     <div class="restaurant-card row">
       <card class="col-12 col-lg-4" :restaurant="restaurant" v-for="restaurant in restaurantList"></card>
     </div>
@@ -25,7 +26,7 @@ export default {
   },
   data() {
     return {
-      restaurantList: [],
+      restaurantList: '',
       categoryList:[]
     }
   },
@@ -71,9 +72,17 @@ export default {
 .home {
   width: 100%;
   height: 100vh;
+  background-image: linear-gradient(to right, #434343, #000000);
 }
 
 .restaurant-card{
   width: 100vw;
+  background-image: linear-gradient(to right, #434343, #000000);
+}
+
+.default-message{
+  margin: 100px 0;
+  color: white;
+  text-align: center;
 }
 </style>

@@ -10,11 +10,10 @@
         <div class="navbar-nav">
           <ul class="nav">
             <li class="nav-item">
-              <a class="nav-link" aria-current="page" href="">All</a>
+              <a class="nav-link" :class="{ active: isActive }" href="/" @click="toggleAllCategory()">All</a>
             </li>
-            <li class="nav-item" v-for="category in categoryList">
-              <span class="nav-link category-link" @click="handleSelectCategory(category)">{{ category.attributes.name
-              }}</span>
+            <li class="nav-item" v-for="(category, index) in categoryList">
+              <span :class="{ active: category.isActive }" class="nav-link category-link" @click="handleSelectCategory(category, index)">{{ category.attributes.name}}</span>
             </li>
           </ul>
         </div>
@@ -31,6 +30,7 @@ export default {
   data() {
     return {
       categoryList: [],
+      isActive:true
     }
   },
   created() {
@@ -43,11 +43,26 @@ export default {
         url: "http://localhost:1337/api/categories"
       })
         .then(response => {
+          let categories = response.data.data;
+          categories.forEach(item => {
+            item.isActive = false;
+          })
           this.categoryList = response.data.data;
         })
     },
-    handleSelectCategory(category) {
+    handleSelectCategory(category, index) {
+      this.resetActiveCategory();
+      this.categoryList[index].isActive = true;
       this.$emit("filterCategory", category.id);
+    },
+    resetActiveCategory() {
+      this.categoryList.forEach(item => {
+        item.isActive = false;
+      })
+      this.toggleAllCategory()
+    },
+    toggleAllCategory(){
+       this.isActive = false
     }
   }
 }
@@ -63,6 +78,10 @@ export default {
 
 .nav-link{
   color:white
+}
+
+.nav-link:hover{
+  color: black;
 }
 
 .category-link:hover {
