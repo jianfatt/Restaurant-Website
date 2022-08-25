@@ -1,5 +1,5 @@
 <template>
-  <div class="form AddRestaurantForm">
+  <div class="form AddRestaurantForm col-lg-4">
 
     <form @submit.prevent="handleAddRestaurant()">
     <div class="input-box">
@@ -83,7 +83,7 @@
 const axios = require("axios").default;
 const headers = {
   Authorization:
-    "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjYwNTI1Nzk4LCJleHAiOjE2NjMxMTc3OTh9.mYq36UcH2P_rYq5u9sdWSxybLJokR1IL61K-C_9ch1g",
+    "Bearer " + localStorage.getItem('token'),
     "Accept": "application/json",
 };
 const formData = new FormData();

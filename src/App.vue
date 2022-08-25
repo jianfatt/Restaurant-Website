@@ -7,7 +7,19 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <ul v-if="userList==null" class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <router-link class="nav-link" aria-current="page" to="/">Home</router-link>
+            </li>
+            <li class="nav-item">
+              <router-link class="nav-link" to="/login">Login</router-link>
+            </li>
+            <li class="nav-item">
+              <router-link class="nav-link" to="/register">Register</router-link>
+            </li>
+          </ul>
+
+            <ul v-else class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
               <router-link class="nav-link" aria-current="page" to="/">Home</router-link>
             </li>
@@ -18,10 +30,7 @@
               <router-link class="nav-link" to="/all-restaurant">Restaurant</router-link>
             </li>
             <li class="nav-item">
-              <router-link class="nav-link" to="/login">Login</router-link>
-            </li>
-            <li class="nav-item">
-              <router-link class="nav-link" to="/register">Register</router-link>
+              <a class="nav-link" href="/" @click="handleLogout()">Logout</a>
             </li>
           </ul>
         </div>
@@ -30,6 +39,46 @@
     <router-view />
   </div>
 </template>
+
+<script>
+const axios = require('axios').default;
+
+const headers = { 
+            'Authorization': 'Bearer ' + localStorage.getItem('token'),
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            };
+
+export default{
+  name: 'App',
+  data(){
+    return{
+      userList:null,
+    }
+  },
+  created(){
+      this.getUser();
+  },
+  methods:{
+    getUser(){
+      axios({
+                method: 'GET',
+                url: "http://localhost:1337/api/users",
+                headers: headers,
+            })
+                .then(response => {
+                    this.userList = response.data;
+
+                    console.log("User", response.data);
+                })
+    },
+    handleLogout(){
+        this.userList=null;
+        localStorage.removeItem('token');
+    }
+  }
+}
+</script>
 
 
 <style scoped>

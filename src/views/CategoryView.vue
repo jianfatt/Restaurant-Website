@@ -17,11 +17,6 @@ export default {
 </script>
 
 <style>
-  .category{
-    width: 100%;
-    padding: 0 100px;
-  }
-
   .previous-page-link{
     display: block;
     margin: 20px 0;

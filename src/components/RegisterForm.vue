@@ -1,6 +1,6 @@
 <template>
-    <div class="form RegisterForm">
-
+    <div class="form RegisterForm col-lg-4">
+        <form @submit.prevent="handleRegister()">
             <div class="input-box">
                 <p class="form-label">Username</p>
                 <p><input type="text" v-model="username" class="form-control" required></p>
@@ -13,9 +13,10 @@
 
                 <p class="message account-recovery"><a class="link account-recovery-link" href="#">Forgot Username / Password?</a></p>
 
-                <button class="btn btn-primary" @click="handleRegister()">Register</button>
+                <input class="btn btn-primary" type="submit" value="Register"/>
                 </div>
                 <p class="message hint-message">Already have an account?<router-link :to="{ path: '/login'}" class="link hint-link" > Login </router-link></p>
+        </form>
     </div>
 </template>
 

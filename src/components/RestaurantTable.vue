@@ -6,7 +6,8 @@
     <router-link :to="{ path: '/add-restaurant' }" class="btn btn-primary">Add</router-link>
   </div>
 
-<table class="table">
+<div class="table-responsive">
+<table class="table table-sm table-bordered border-dark">
   <thead>
     <tr>
       <th class="table-cell" scope="col">No.</th>
@@ -18,14 +19,15 @@
     </tr>
   </thead>
   <tbody>
-    <tr v-for="restaurant in restaurantList">
+    <tr v-for="restaurant in restaurantList" class="align-middle">
       <td class="table-cell counterCell " scope="row"></td>
       <td class="table-cell restaurant-cell"><router-link :to="{ path: 'restaurant/' + restaurant.id }" class="restaurant-link">{{ restaurant.attributes.name }}</router-link></td>
-      <td class="table-cell restaurant-cell"><router-link :to="{ path: 'restaurant/' + restaurant.id }" class="restaurant-link">{{ restaurant.attributes.address }}</router-link></td>
-      <td v-if="restaurant.attributes.website==''" class="table-cell restaurant-cell"><router-link :to="{ path: 'restaurant/' + restaurant.id }" class="restaurant-link">N/A</router-link></td>
-      <td v-else class="table-cell restaurant-cell website-cell"><router-link :to="{ path: 'restaurant/' + restaurant.id }" class="restaurant-link">{{ restaurant.attributes.website }}</router-link></td>
-      <td v-if="restaurant.attributes.phone==''" class="table-cell restaurant-cell"><router-link :to="{ path: 'restaurant/' + restaurant.id }" class="restaurant-link">N/A</router-link></td>
-      <td v-else class="table-cell restaurant-cell"><router-link :to="{ path: 'restaurant/' + restaurant.id }" class="restaurant-link">{{ restaurant.attributes.phone }}</router-link></td>
+      <td class="table-cell restaurant-cell">{{ restaurant.attributes.address }}</td>
+      <td v-if="restaurant.attributes.website==''" class="table-cell restaurant-cell">N/A</td>
+      <td v-else class="table-cell restaurant-cell website-cell">{{ restaurant.attributes.website }}</td>
+      <td v-if="restaurant.attributes.phone==''" class="table-cell restaurant-cell">N/A</td>
+      <td v-else class="table-cell restaurant-cell">{{ restaurant.attributes.phone }}</td>
+
       <td class="table-cell action-cell">
         <router-link :to="{ path: 'edit-restaurant/' + restaurant.id }"><button class="btn btn-primary action-button">Edit</button></router-link>
         <button class="btn btn-danger action-button" @click="handleDeleteRestaurant(restaurant)">Delete</button>
@@ -33,6 +35,7 @@
     </tr>
   </tbody>
 </table>
+</div>
 </div>
 </template>
 
@@ -64,7 +67,7 @@ export default {
         handleDeleteRestaurant(restaurant){
           console.log("restaurant", restaurant)
           const headers = { 
-            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjYwNTI1Nzk4LCJleHAiOjE2NjMxMTc3OTh9.mYq36UcH2P_rYq5u9sdWSxybLJokR1IL61K-C_9ch1g',
+            'Authorization': 'Bearer ' + localStorage.getItem('token'),
             'Content-Type': 'application/json',
             'Accept': 'application/json',
         };
@@ -86,7 +89,7 @@ export default {
 <style>
 .restaurant-cell{
   text-align: center;
-  width: 200px;
+  width: 250px;
 }
 
 </style>

@@ -1,7 +1,7 @@
 <template>
-    <div class="form EditCategoryForm">
+    <div class="form EditCategoryForm col-lg-4">
 
-        <form action="/category">
+        <form @submit.prevent="handleEditCategory()">
         <div class="input-box">
 
             <p class="form-label">New Category Name</p>
@@ -14,7 +14,7 @@
                 </select>
                 </p>
 
-            <input class="btn btn-primary" type="submit" @click="handleEditCategory()" value="Save">
+            <input class="btn btn-primary" type="submit" value="Save">
         </div>
         </form>
     </div>
@@ -43,7 +43,7 @@ export default {
     methods: {
         handleEditCategory() {
             const headers = { 
-            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjYwNTI1Nzk4LCJleHAiOjE2NjMxMTc3OTh9.mYq36UcH2P_rYq5u9sdWSxybLJokR1IL61K-C_9ch1g',
+            'Authorization': 'Bearer ' + localStorage.getItem('token'),
             'Content-Type': 'application/json',
             'Accept': 'application/json',
             };
@@ -63,6 +63,7 @@ export default {
                 },
             })
                 .then(response => {
+                    this.$router.push('/category')
                     console.log("edited",response.data);
                 })
             }
@@ -91,9 +92,3 @@ export default {
     }
 }
 </script>
-
-<style scoped>
-.current-category{
-    font-size: 30px;
-}
-</style>

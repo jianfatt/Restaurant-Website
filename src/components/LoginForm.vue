@@ -1,6 +1,7 @@
 <template>
-    <div class="form loginForm">
+    <div class="form loginForm col-lg-4">
 
+        <form @submit.prevent="handleLogin()">
         <div class="input-box">
             <p class="form-label">Username</p>
             <p><input type="text" v-model="username" class="form-control"></p>
@@ -11,15 +12,13 @@
             <p class="message account-recovery"><a class="link account-recovery-link" href="#">Forgot Username /
                     Password?</a></p>
 
-            <button class="btn btn-primary" @click="handleLogin()">Login</button>
-
+            <input class="btn btn-primary" type="submit" value="Login"/>
         </div>
+        </form>
 
         <p class="message hint-message">Don't have an account?<router-link :to="{ path: '/register' }"
                 class="link hint-link"> Register </router-link>
         </p>
-        <span class="message error-message" v-show="errored">{{ errorMsg }}</span>
-
     </div>
 </template>
 
@@ -49,7 +48,9 @@ export default {
             })
                 .then(response => {
                     this.account = response.data
-                    console.log(response.data);
+                    console.log(response.data.jwt);
+
+                    localStorage.setItem('token', response.data.jwt)
                     this.$router.push('/')
                 })
                 .catch(error => {
@@ -64,7 +65,7 @@ export default {
 <style>
 .form {
     margin: auto;
-    width: 380px;
+    text-align: center
 }
 
 .input-box {

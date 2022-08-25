@@ -6,7 +6,8 @@
     <router-link :to="{ path: '/add-category' }" class="btn btn-primary">Add</router-link>
   </div>
 
-<table class="table">
+<div class="table-responsive">
+<table class="table table-bordered border-dark">
   <thead>
     <tr>
       <th class="table-cell" scope="col">No.</th>
@@ -25,6 +26,7 @@
     </tr>
   </tbody>
 </table>
+</div>
 </div>
 </template>
 
@@ -56,7 +58,7 @@ export default {
         handleDeleteCategory(category){
           console.log("category", category)
           const headers = { 
-            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjYwNTI1Nzk4LCJleHAiOjE2NjMxMTc3OTh9.mYq36UcH2P_rYq5u9sdWSxybLJokR1IL61K-C_9ch1g',
+            'Authorization': 'Bearer ' + localStorage.getItem('token'),
             'Content-Type': 'application/json',
             'Accept': 'application/json',
         };
@@ -90,7 +92,6 @@ export default {
 }
 
 .table-cell{
-  border: 1px solid black;
   font-size: 20px;
 }
 

@@ -19,7 +19,6 @@ export default {
 
 <style>
 .crud-page{
-  height: 100vh;
   margin: 10px 20px;
 }
 

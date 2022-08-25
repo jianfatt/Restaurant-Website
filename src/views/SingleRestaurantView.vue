@@ -79,7 +79,7 @@
 <script>
 const axios = require('axios').default;
 const headers = {
-    'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjYwNTI1Nzk4LCJleHAiOjE2NjMxMTc3OTh9.mYq36UcH2P_rYq5u9sdWSxybLJokR1IL61K-C_9ch1g',
+    'Authorization': 'Bearer ' + localStorage.getItem('token'),
     'Content-Type': 'application/json',
     'Accept': 'application/json',
 };
@@ -135,8 +135,6 @@ export default {
             })
                 .then(response => {
                     this.restaurant = response.data.data;
-                    console.log("aa", response.data.data);
-
                 })
         },
     }

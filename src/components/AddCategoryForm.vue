@@ -1,7 +1,7 @@
 <template>
-    <div class="form AddCategoryForm">
+    <div class="form AddCategoryForm col-lg-4">
 
-        <form action="/category">
+        <form @submit.prevent="handleAddCategory()">
         <div class="input-box">
             <p class="form-label">New Category Name</p>
             <p><input type="text" v-model.trim="categoryName" class="form-control" required></p>
@@ -12,7 +12,7 @@
                     <option v-for="restaurant in restaurantList" v-bind:value="restaurant">{{ restaurant.attributes.name }}</option>
                 </select>
 
-            <input class="btn btn-primary" type="submit" @click="handleAddCategory()" value="Add">
+            <input class="btn btn-primary" type="submit" value="Add">
 
         </div>
         </form>
@@ -39,7 +39,7 @@ export default {
     methods: {
         handleAddCategory() {
             const headers = { 
-            'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjYwNTI1Nzk4LCJleHAiOjE2NjMxMTc3OTh9.mYq36UcH2P_rYq5u9sdWSxybLJokR1IL61K-C_9ch1g',
+            'Authorization': 'Bearer ' + localStorage.getItem('token'),
             'Content-Type': 'application/json',
             'Accept': 'application/json',
         };
@@ -61,7 +61,7 @@ export default {
                 .then(response => {
                     this.category = response.data.data;
                     console.log(response.data.data);
-                    //this.$router.push('/category')
+                    this.$router.push('/category')
                 })
             }
         },
@@ -78,9 +78,3 @@ export default {
     }
 }
 </script>
-
-<style>
-.form{
-    text-align: center;
-}
-</style>

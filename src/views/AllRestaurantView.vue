@@ -15,10 +15,3 @@ export default {
 }
 }
 </script>
-
-<style>
-  .restaurant{
-    width: 100%;
-    padding: 0 100px;
-  }
-</style>
