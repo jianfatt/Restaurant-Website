@@ -71,18 +71,13 @@
                         </div>
                     </div>
                 </div>
-                <p  class="col-lg-9"><router-link class="btn btn-sm btn-primary" :to="{ path: '/edit-restaurant/' + restaurant.id }">Edit</router-link></p>
+                <p v-show="isLogin" class="col-lg-9"><router-link class="btn btn-sm btn-primary" :to="{ path: '/edit-restaurant/' + restaurant.id }">Edit</router-link></p>
     </div>
     </div>
 </template>
 
 <script>
 const axios = require('axios').default;
-const headers = {
-    'Authorization': 'Bearer ' + localStorage.getItem('token'),
-    'Content-Type': 'application/json',
-    'Accept': 'application/json',
-};
 
 export default {
     name: 'SingleRestaurantView',
@@ -94,19 +89,17 @@ export default {
             dayList: [],
             menuList: [],
             id: this.$route.params.id,
-            errored:false
+            isLogin: localStorage.getItem('token'),
         }
     },
     created() {
         this.getRestaurantInfo();
-        this.getAllRestaurant();
     },
     methods: {
         getRestaurantInfo() {
             axios({
                 method: 'GET',
                 url: "http://localhost:1337/api/restaurants/" + this.id + "?",
-                headers: headers,
                 params: {
                     populate: "image,closingDays,menu"
                 }
@@ -126,15 +119,6 @@ export default {
                     console.log("Image", response.data.data.attributes.image.data);
                     console.log("Menu", response.data.data.attributes.menu.data);
                     console.log("Days", response.data.data.attributes.closingDays.data);
-                })
-        },
-        getAllRestaurant() {
-            axios({
-                method: 'GET',
-                url: "http://localhost:1337/api/restaurants/" + this.id,
-            })
-                .then(response => {
-                    this.restaurant = response.data.data;
                 })
         },
     }

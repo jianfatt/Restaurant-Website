@@ -10,7 +10,7 @@
         <div class="navbar-nav">
           <ul class="nav">
             <li class="nav-item">
-              <a class="nav-link" :class="{ active: isActive }" href="/" @click="toggleAllCategory()">All</a>
+              <a class="nav-link" :class="{ active: isActive }" href="/" @click="navAllCategory()">All</a>
             </li>
             <li class="nav-item" v-for="(category, index) in categoryList">
               <span :class="{ active: category.isActive }" class="nav-link category-link" @click="handleSelectCategory(category, index)">{{ category.attributes.name}}</span>
@@ -59,9 +59,9 @@ export default {
       this.categoryList.forEach(item => {
         item.isActive = false;
       })
-      this.toggleAllCategory()
+      this.navAllCategory()
     },
-    toggleAllCategory(){
+    navAllCategory(){
        this.isActive = false
     }
   }
