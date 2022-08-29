@@ -7,7 +7,7 @@
   </div>
 
 <div class="table-responsive">
-<table class="table table-sm table-bordered border-dark">
+<table class="table table-bordered border-dark">
   <thead>
     <tr>
       <th class="table-cell" scope="col">No.</th>
@@ -24,9 +24,9 @@
       <td class="table-cell restaurant-cell"><router-link :to="{ path: 'restaurant/' + restaurant.id }" class="restaurant-link">{{ restaurant.attributes.name }}</router-link></td>
       <td class="table-cell restaurant-cell">{{ restaurant.attributes.address }}</td>
       <td v-if="restaurant.attributes.website==''" class="table-cell restaurant-cell">N/A</td>
-      <td v-else class="table-cell restaurant-cell website-cell">{{ restaurant.attributes.website }}</td>
+      <td v-else class="table-cell restaurant-cell info-cell">{{ restaurant.attributes.website }}</td>
       <td v-if="restaurant.attributes.phone==''" class="table-cell restaurant-cell">N/A</td>
-      <td v-else class="table-cell restaurant-cell">{{ restaurant.attributes.phone }}</td>
+      <td v-else class="table-cell restaurant-cell info-cell">{{ restaurant.attributes.phone }}</td>
 
       <td class="table-cell action-cell">
         <router-link :to="{ path: 'edit-restaurant/' + restaurant.id }"><button class="btn btn-primary action-button">Edit</button></router-link>
@@ -48,6 +48,7 @@ export default {
         return {
                 restaurantList: [],
                 deletedRestaurant:[],
+                api_url:process.env.VUE_APP_API_URL,
         }
     },
     created() {
@@ -57,7 +58,7 @@ export default {
         getAllCategories() {
             axios({
                 method: 'GET',
-                url: "http://localhost:1337/api/restaurants",
+                url: this.api_url + "/api/restaurants",
             })
                 .then(response => {
                     this.restaurantList = response.data.data;
@@ -66,15 +67,9 @@ export default {
         },
         handleDeleteRestaurant(restaurant){
           console.log("restaurant", restaurant)
-          const headers = { 
-            'Authorization': 'Bearer ' + localStorage.getItem('token'),
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-        };
             axios({
                 method: 'DELETE',
-                url: "http://localhost:1337/api/restaurants/" + restaurant.id,
-                headers:headers,
+                url: this.api_url + "/api/restaurants/" + restaurant.id,
             })
                 .then(response => {
                     this.deleteRestaurant = response;
@@ -89,7 +84,13 @@ export default {
 <style>
 .restaurant-cell{
   text-align: center;
-  width: 250px;
 }
 
+.info-cell{
+  width: 170px;
+}
+
+.action-cell{
+  width: 200px;
+}
 </style>

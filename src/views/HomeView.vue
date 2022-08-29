@@ -4,7 +4,7 @@
     <categoryNav @filterCategory="handleFilterCategory($event)" ></categoryNav>
     <h1 v-if="restaurantList==''" class="default-message">No restaurant available yet</h1>
     <div class="restaurant-card row">
-      <card class="col-12 col-lg-4" :restaurant="restaurant" v-for="restaurant in restaurantList"></card>
+      <card class="col-12 col-md-6 col-lg-4" :restaurant="restaurant" v-for="restaurant in restaurantList"></card>
     </div>
   </div>
 </template>
@@ -27,7 +27,8 @@ export default {
   data() {
     return {
       restaurantList: '',
-      categoryList:[]
+      categoryList:[],
+      api_url:process.env.VUE_APP_API_URL,
     }
   },
   created() {
@@ -49,7 +50,7 @@ export default {
       
       axios({
         method: 'GET',
-        url: `http://localhost:1337/api/restaurants?${query}`,
+        url: this.api_url + `/api/restaurants?${query}`,
         params: {
           populate: "image,categories",
         }

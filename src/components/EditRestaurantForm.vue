@@ -89,13 +89,6 @@
 
 <script>
 const axios = require("axios").default;
-
-const headers = {
-  Authorization:
-    "Bearer " + localStorage.getItem('token'),
-  "Content-Type": "application/json",
-  Accept: "application/json",
-};
 const formData = new FormData();
 
 export default {
@@ -117,6 +110,7 @@ export default {
       image: null,
       errored: false,
       id: this.$route.params.id,
+      api_url:process.env.VUE_APP_API_URL,
     };
   },
   created() {
@@ -133,10 +127,9 @@ export default {
             formData.append("image", this.files);
             axios({
             method: "POST",
-            url: "http://localhost:1337/api/upload",
+            url: this.api_url + "/api/upload",
             formData,
             headers: {
-                ...headers,
                 "Content-Type": "multipart/form-data",
             },
             data: {
@@ -155,8 +148,7 @@ export default {
     updateRestaurant() {
         axios({
             method: "PUT",
-            url: "http://localhost:1337/api/restaurants/" + this.id,
-            headers: headers,
+            url: this.api_url + "/api/restaurants/" + this.id,
             data: {
             data: {
               name: this.restaurantList.name,
@@ -177,7 +169,7 @@ export default {
     getAllRestaurants() {
       axios({
         method: "GET",
-        url: "http://localhost:1337/api/restaurants/" + this.id,
+        url: this.api_url + "/api/restaurants/" + this.id,
       }).then((response) => {
         this.restaurantList = response.data.data.attributes;
         console.log("Restaurants", response.data.data);
@@ -186,7 +178,7 @@ export default {
     getAllCategories() {
       axios({
         method: "GET",
-        url: "http://localhost:1337/api/categories",
+        url: this.api_url + "/api/categories",
       }).then((response) => {
         this.categoryList = response.data.data;
         console.log("All Categories", response.data.data);
@@ -195,8 +187,7 @@ export default {
     getAllDays() {
       axios({
         method: "GET",
-        url: "http://localhost:1337/api/days",
-        headers: headers,
+        url: this.api_url + "/api/days",
       }).then((response) => {
         this.dayList = response.data.data;
         console.log("All days", response.data.data);

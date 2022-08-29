@@ -4,7 +4,7 @@
         <div v-else id="carouselExampleControls1" class="carousel slide restaurant-carousel" data-bs-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item" :class="{ active: image.attributes.isFirstImage == true }" v-for="image in imageList">
-                    <img class="restaurant-carousel-image img-fluid" :src="'http://localhost:1337' + image.attributes.url" :alt="restaurantList.name">
+                    <img class="restaurant-carousel-image img-fluid" :src="api_url + image.attributes.url" :alt="restaurantList.name">
                 </div>
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls1"
@@ -38,7 +38,7 @@
             <p class="label col-lg-9">Menu</p>
                     <div class="menu col-lg-9">
                         <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                            <img v-for="menu in menuList" class="menu-image" :src="'http://localhost:1337' + menu.attributes.url" :alt="restaurantList.name">
+                            <img v-for="menu in menuList" class="menu-image" :src="api_url + menu.attributes.url" :alt="restaurantList.name">
                         </a>
                     </div>
                 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
@@ -53,7 +53,7 @@
                                 <div id="carouselExampleControls2" class="carousel slide menu-carousel" data-bs-ride="carousel">
                                     <div class="carousel-inner">
                                         <div class="carousel-item" :class="{ active: menu.attributes.isFirstMenu == true }" v-for="menu in menuList">
-                                            <img class="menu-carousel-image img-fluid" :src="'http://localhost:1337' + menu.attributes.url" :alt="restaurantList.name">
+                                            <img class="menu-carousel-image img-fluid" :src="api_url + menu.attributes.url" :alt="restaurantList.name">
                                         </div>
                                     </div>
                                     <button class="carousel-control-prev" type="button"
@@ -89,6 +89,7 @@ export default {
             dayList: [],
             menuList: [],
             id: this.$route.params.id,
+            api_url:process.env.VUE_APP_API_URL,
             isLogin: localStorage.getItem('token'),
         }
     },
@@ -99,7 +100,7 @@ export default {
         getRestaurantInfo() {
             axios({
                 method: 'GET',
-                url: "http://localhost:1337/api/restaurants/" + this.id + "?",
+                url: this.api_url + "/api/restaurants/" + this.id + "?",
                 params: {
                     populate: "image,closingDays,menu"
                 }

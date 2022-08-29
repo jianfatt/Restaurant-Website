@@ -32,6 +32,7 @@ export default {
             account: null,
             username: '',
             password: '',
+            api_url:process.env.VUE_APP_API_URL,
             errored: false,
             errorMsg: 'Invalid username or password. Please try again.'
         }
@@ -40,7 +41,7 @@ export default {
         handleLogin() {
             axios({
                 method: 'POST',
-                url: 'http://localhost:1337/api/auth/local',
+                url: this.api_url + '/api/auth/local',
                 data: {
                     identifier: this.username,
                     password: this.password

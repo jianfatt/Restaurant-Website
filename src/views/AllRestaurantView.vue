@@ -1,7 +1,7 @@
 <template>
 <div class="restaurant">
 <a class="btn btn-sm btn-outline-dark previous-page-link" @click="$router.back()">Back</a>
-<restaurantTable></restaurantTable>
+<restaurantTable class=" restaurant-table col-10"></restaurantTable>
 </div>
 </template>
 
@@ -15,3 +15,9 @@ export default {
 }
 }
 </script>
+
+<style>
+.restaurant-table{
+  margin: auto;
+}
+</style>

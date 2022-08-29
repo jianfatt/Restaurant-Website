@@ -48,41 +48,16 @@ const routes = [
     path: '/all-restaurant/',
     name: 'all-restaurant',
     component: AllRestaurantView,
-    beforeEnter: (to, from, next) => {
-      if(!isLogin){
-        alert('Please login to view this page')
-        next({name: 'login'})
-      }else{
-        next()
-      }
-    }
   },
   {
     path: '/add-restaurant',
     name: 'add-restaurant',
     component: AddRestaurantView,
-    beforeEnter: (to, from, next) => {
-      if(!isLogin){
-        alert('Please login to view this page')
-        next({name: 'login'})
-      }else{
-        next()
-      }
-    }
   },
   {
     path: '/edit-restaurant/:id',
     name: 'edit-restaurant',
     component: EditRestaurantView,
-    beforeEnter: (to, from, next) => {
-      [removeQueryParams]
-      if(!isLogin){
-        alert('Please login to view this page')
-        next({name: 'login'})
-      }else{
-        next()
-      }
-    }
   },
   {
     path: '/restaurant/:id',
@@ -93,41 +68,16 @@ const routes = [
     path: '/add-category',
     name: 'add-category',
     component: AddCategoryView,
-    beforeEnter: (to, from, next) => {
-      if(!isLogin){
-        alert('Please login to view this page')
-        next({name: 'login'})
-      }else{
-        next()
-      }
-    }
   },
   {
     path: '/edit-category/:id',
     name: 'edit-category',
     component: EditCategoryView,
-    beforeEnter: (to, from, next) => {
-      [removeQueryParams]
-      if(!isLogin){
-        alert('Please login to view this page')
-        next({name: 'login'})
-      }else{
-        next()
-      }
-    }
   },
   {
     path: '/category',
     name: 'category',
     component: CategoryView,
-    beforeEnter: (to, from, next) => {
-      if(!isLogin){
-        alert('Please login to view this page')
-        next({name: 'login'})
-      }else{
-        next()
-      }
-    }
   },
 ]
 
@@ -135,6 +85,19 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  if ((to.name == 'category' || to.name == 'all-restaurant' || to.name == 'add-restaurant' || to.name == 'add-category') && !isLogin){
+    alert('Please login to view this page')
+    next({ name: 'login' })
+  }
+  if ((to.name == 'edit-category' || to.name == 'edit-restaurant') && !isLogin){
+    [removeQueryParams]
+    alert('Please login to view this page')
+    next({ name: 'login' })
+  }
+  else next()
 })
 
 export default router

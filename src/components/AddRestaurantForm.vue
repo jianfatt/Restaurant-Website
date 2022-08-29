@@ -81,11 +81,6 @@
 
 <script>
 const axios = require("axios").default;
-const headers = {
-  Authorization:
-    "Bearer " + localStorage.getItem('token'),
-    "Accept": "application/json",
-};
 const formData = new FormData();
 
 export default {
@@ -105,6 +100,7 @@ export default {
       newUpload: [],
       files: null,
       image: null,
+      api_url:process.env.VUE_APP_API_URL,
       errored: false,
     };
   },
@@ -121,10 +117,9 @@ export default {
         formData.append("image", this.files);
         axios({
           method: "POST",
-          url: "http://localhost:1337/api/upload",
+          url: this.api_url + "/api/upload",
           formData,
           headers: {
-            ...headers,
             "Content-Type": "multipart/form-data"
           },
           data: {
@@ -142,8 +137,7 @@ export default {
     CreateNewRestaurant(){
       axios({
             method: "POST",
-            url: "http://localhost:1337/api/restaurants",
-            headers: headers,
+            url: this.api_url + "/api/restaurants",
             data: {
               data: {
                 name: this.restaurantName,
@@ -164,7 +158,7 @@ export default {
     getAllCategories() {
       axios({
         method: "GET",
-        url: "http://localhost:1337/api/categories",
+        url: this.api_url + "/api/categories",
       }).then((response) => {
         this.categoryList = response.data.data;
         console.log("All Categories", response.data.data);
@@ -173,8 +167,7 @@ export default {
     getAllDays() {
       axios({
         method: "GET",
-        url: "http://localhost:1337/api/days",
-        headers: headers,
+        url: this.api_url + "/api/days",
       }).then((response) => {
         this.dayList = response.data.data;
         console.log("All days", response.data.data);

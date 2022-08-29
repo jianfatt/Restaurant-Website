@@ -30,7 +30,8 @@ export default {
   data() {
     return {
       categoryList: [],
-      isActive:true
+      api_url:process.env.VUE_APP_API_URL,
+      isActive:true,
     }
   },
   created() {
@@ -40,7 +41,7 @@ export default {
     getAllCategories() {
       axios({
         method: 'GET',
-        url: "http://localhost:1337/api/categories"
+        url: this.api_url + "/api/categories"
       })
         .then(response => {
           let categories = response.data.data;

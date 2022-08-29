@@ -31,13 +31,14 @@ export default {
             username: '',
             email:'',
             password: '',
+            api_url:process.env.VUE_APP_API_URL,
         }
     },
     methods: {
         handleRegister() {
             axios({
                 method: 'POST',
-                url: 'http://localhost:1337/api/auth/local/register',
+                url: this.api_url + '/api/auth/local/register',
                 data: {
                     username: this.username,
                     email: this.email,

@@ -33,6 +33,7 @@ export default {
             newCategoryName: '',
             restaurantName:null,
             id:this.$route.params.id,
+            api_url:process.env.VUE_APP_API_URL,
             errored:false
         }
     },
@@ -42,19 +43,13 @@ export default {
     },
     methods: {
         handleEditCategory() {
-            const headers = { 
-            'Authorization': 'Bearer ' + localStorage.getItem('token'),
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-            };
             if(this.categoryList.name==''){
                 this.errored = true
             }
             else{
                 axios({
                 method: 'PUT',
-                url: 'http://localhost:1337/api/categories/' + this.id,
-                headers: headers,
+                url: this.api_url + '/api/categories/' + this.id,
                 data: {
                     data: {
                         name: this.categoryList.name,
@@ -72,7 +67,7 @@ export default {
          getCategory() {
             axios({
                 method: 'GET',
-                url: "http://localhost:1337/api/categories/" + this.id,
+                url: this.api_url + "/api/categories/" + this.id,
             })
                 .then(response => {
                     this.categoryList = response.data.data.attributes;
@@ -82,7 +77,7 @@ export default {
          getAllRestaurants() {
             axios({
                 method: 'GET',
-                url: 'http://localhost:1337/api/restaurants',
+                url: this.api_url + '/api/restaurants',
             })
                 .then(response => {
                     this.restaurantList = response.data.data;

@@ -36,6 +36,7 @@ export default {
 }
 
 .hero-image{
+  object-fit: cover;
   margin: 0 0 0 10px;
   width: 525px;
   height: 350px;
