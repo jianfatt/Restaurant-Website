@@ -47,3 +47,81 @@ axios.interceptors.response.use(function (response) {
       return Promise.reject(error);
   }
 });
+
+// Add a 401 response interceptor
+axios.interceptors.response.use(function (response) {
+  return response;
+}, function (error) {
+  if (401 === error.response.status) {
+      Swal({
+          title: "Session Expired",
+          text: "Your session has expired. Would you like to be redirected to the login page?",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonText: "Yes",
+          closeOnConfirm: false
+      }, function(){
+          window.location = '/login';
+      });
+  } else {
+      return Promise.reject(error);
+  }
+});
+
+// Add a 403 response interceptor
+axios.interceptors.response.use(function (response) {
+  return response;
+}, function (error) {
+  if (403 === error.response.status) {
+      Swal({
+          title: "Forbidden",
+          text: "This account is forbidden to do this action.",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonText: "Yes",
+          closeOnConfirm: false
+      }, function(){
+          window.location = '/';
+      });
+  } else {
+      return Promise.reject(error);
+  }
+});
+
+// Add a 404 response interceptor
+axios.interceptors.response.use(function (response) {
+  return response;
+}, function (error) {
+  if (404 === error.response.status) {
+      Swal({
+          title: "Error",
+          text: "Error not found.",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonText: "Yes",
+          closeOnConfirm: false
+      }, function(){
+          window.location = '/';
+      });
+  } else {
+      return Promise.reject(error);
+  }
+});
+
+// Add a 500 response interceptor
+axios.interceptors.response.use(function (response) {
+  return response;
+}, function (error) {
+  if (500 === error.response.status) {
+      Swal({
+          title: "Internal Server Error",
+          text: "Please try again.",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonText: "Yes",
+          closeOnConfirm: false
+      });
+  } else {
+      return Promise.reject(error);
+  }
+});

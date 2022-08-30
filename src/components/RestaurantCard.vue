@@ -49,7 +49,7 @@ export default {
 }
 
 .card-img-top {
-    object-fit:cover;
+    object-fit:scale-down;
     height: 200px;
 }
 

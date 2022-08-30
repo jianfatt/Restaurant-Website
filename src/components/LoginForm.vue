@@ -2,18 +2,18 @@
     <div class="form loginForm col-lg-4">
 
         <form @submit.prevent="handleLogin()">
-        <div class="input-box">
-            <p class="form-label">Username</p>
-            <p><input type="text" v-model="username" class="form-control"></p>
+            <div class="input-box">
+                <p class="form-label">Username</p>
+                <p><input type="text" v-model="username" class="form-control"></p>
 
-            <p class="form-label">Password</p>
-            <p><input type="password" v-model="password" class="form-control"></p>
+                <p class="form-label">Password</p>
+                <p><input type="password" v-model="password" class="form-control"></p>
 
-            <p class="message account-recovery"><a class="link account-recovery-link" href="#">Forgot Username /
-                    Password?</a></p>
+                <p class="message account-recovery"><a class="link account-recovery-link" href="#">Forgot Username /
+                        Password?</a></p>
 
-            <input class="btn btn-primary" type="submit" value="Login"/>
-        </div>
+                <input class="btn btn-primary" type="submit" value="Login" />
+            </div>
         </form>
 
         <p class="message hint-message">Don't have an account?<router-link :to="{ path: '/register' }"
@@ -24,6 +24,7 @@
 
 <script>
 const axios = require('axios').default;
+const Swal = require('sweetalert2')
 
 export default {
     name: 'loginForm',
@@ -32,7 +33,7 @@ export default {
             account: null,
             username: '',
             password: '',
-            api_url:process.env.VUE_APP_API_URL,
+            api_url: process.env.VUE_APP_API_URL,
             errored: false,
             errorMsg: 'Invalid username or password. Please try again.'
         }
@@ -52,8 +53,24 @@ export default {
                     console.log(response.data.jwt);
 
                     localStorage.setItem('token', response.data.jwt)
-                    this.$router.push('/')
-                    window.location.reload();
+                    let timerInterval
+                    Swal.fire({
+                        title: 'Login Successfully!',
+                        icon:'success',
+                        timer: 1000,
+                        didOpen: () => {
+                            Swal.showLoading()
+                        },
+                        willClose: () => {
+                            clearInterval(timerInterval)
+                        }
+                    }).then((result) => {
+                        /* Read more about handling dismissals below */
+                        if (result.dismiss === Swal.DismissReason.timer) {
+                            window.location.replace('/');
+                            console.log('I was closed by the timer')
+                        }
+                    })
                 })
                 .catch(error => {
                     console.log(error);

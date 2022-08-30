@@ -97,6 +97,10 @@ router.beforeEach((to, from, next) => {
     alert('Please login to view this page')
     next({ name: 'login' })
   }
+  if ((to.name == 'login' || to.name == 'register') && isLogin){
+    alert('You had already logged in')
+    next({ name: 'home' })
+  }
   else next()
 })
 

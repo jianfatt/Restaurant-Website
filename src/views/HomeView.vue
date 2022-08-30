@@ -1,11 +1,27 @@
 <template>
   <div class="home">
     <hero></hero>
-    <categoryNav @filterCategory="handleFilterCategory($event)" ></categoryNav>
-    <h1 v-if="restaurantList==''" class="default-message">No restaurant available yet</h1>
+    <categoryNav @filterCategory="handleFilterCategory($event)"></categoryNav>
+    <h1 v-if="restaurantList == ''" class="default-message">No restaurant available yet</h1>
     <div class="restaurant-card row">
       <card class="col-12 col-md-6 col-lg-4" :restaurant="restaurant" v-for="restaurant in restaurantList"></card>
     </div>
+    <nav aria-label="Page navigation example" class="home-pagination">
+      <ul class="pagination">
+        <li class="page-item">
+          <span class="page-link" aria-label="Previous" @click="handlePreviousPage()">
+            <span aria-hidden="true">&laquo;</span>
+          </span>
+        </li>
+        <li class="page-item" v-for="page in pageList.pageCount"><span class="page-link" @click="handlePage(page)">{{
+             page  }}</span></li>
+        <li class="page-item">
+          <span class="page-link" aria-label="Next" @click="handleNextPage()">
+            <span aria-hidden="true">&raquo;</span>
+          </span>
+        </li>
+      </ul>
+    </nav>
   </div>
 </template>
 
@@ -15,6 +31,7 @@ const axios = require('axios').default;
 import hero from '@/components/Hero.vue'
 import card from '@/components/RestaurantCard.vue'
 import categoryNav from '@/components/CategoryNavBar.vue'
+
 const qs = require('qs');
 
 export default {
@@ -27,8 +44,11 @@ export default {
   data() {
     return {
       restaurantList: '',
-      categoryList:[],
-      api_url:process.env.VUE_APP_API_URL,
+      categoryList: [],
+      pageList: [],
+      currentPage: 1,
+      currentPageSize: 6,
+      api_url: process.env.VUE_APP_API_URL,
     }
   },
   created() {
@@ -44,26 +64,49 @@ export default {
             },
           },
         },
+        pagination: {
+          page: this.currentPage,
+          pageSize: this.currentPageSize,
+        },
+        populate: "image,categories"
       }, {
         encodeValuesOnly: true,
       });
-      
+
       axios({
         method: 'GET',
-        url: this.api_url + `/api/restaurants?${query}`,
-        params: {
-          populate: "image,categories",
-        }
+        url: `${this.api_url}/api/restaurants?${query}`
       })
         .then(response => {
           this.restaurantList = response.data.data;
+          this.pageList = response.data.meta.pagination;
           console.log("All Restaurants", response.data.data);
+          console.log("Page", response.data.meta.pagination);
         })
     },
-    handleFilterCategory(categoryId){
+    handleFilterCategory(categoryId) {
       console.log("categoryId", categoryId)
       this.getAllRestaurant(categoryId)
       // this.restaurantList = filteredRestaurant;
+    },
+    handlePage(page) {
+      this.currentPage = page
+      this.getAllRestaurant()
+      console.log('Current Number', this.currentPage)
+    },
+    handleNextPage() {
+      if (this.currentPage < this.pageList.pageCount) {
+        this.currentPage += 1
+        this.getAllRestaurant()
+      }
+      console.log('Next Number', this.currentPage)
+    },
+    handlePreviousPage() {
+      if (this.currentPage > 1) {
+        this.currentPage -= 1
+        this.getAllRestaurant()
+      }
+      console.log('Previous Number', this.currentPage)
     }
   }
 }
@@ -76,14 +119,18 @@ export default {
   background-image: linear-gradient(to right, #434343, #000000);
 }
 
-.restaurant-card{
+.restaurant-card {
   width: 100vw;
   background-image: linear-gradient(to right, #434343, #000000);
 }
 
-.default-message{
+.default-message {
   margin: 100px 0;
   color: white;
   text-align: center;
+}
+
+.home-pagination{
+  background: gray;
 }
 </style>

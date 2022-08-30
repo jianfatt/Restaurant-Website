@@ -22,6 +22,7 @@
 
 <script>
 const axios = require('axios').default;
+const Swal = require('sweetalert2')
 
 export default {
     name: 'registerForm',
@@ -48,7 +49,24 @@ export default {
                 .then(response => {
                     this.account = response.data;
                     console.log(response.data);
-                    this.$router.push('/login')
+                    let timerInterval
+                    Swal.fire({
+                        title: 'Resgistered Successfully!',
+                        icon:'success',
+                        timer: 1000,
+                        didOpen: () => {
+                            Swal.showLoading()
+                        },
+                        willClose: () => {
+                            clearInterval(timerInterval)
+                        }
+                    }).then((result) => {
+                        /* Read more about handling dismissals below */
+                        if (result.dismiss === Swal.DismissReason.timer) {
+                            this.$router.push('/login')
+                            console.log('I was closed by the timer')
+                        }
+                    })
                 })
                 .catch(error => {
                     console.log(error);

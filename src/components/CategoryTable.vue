@@ -18,7 +18,7 @@
         <tbody>
           <tr v-for="category in categoryList">
             <td class="table-cell counterCell " scope="row"></td>
-            <td class="table-cell category-cell">{{ category.attributes.name }}</td>
+            <td class="table-cell category-cell">{{  category.attributes.name  }}</td>
             <td class="table-cell action-cell">
               <router-link :to="{ path: 'edit-category/' + category.id }"><button
                   class="btn btn-primary action-button">Edit</button></router-link>
@@ -85,6 +85,7 @@ export default {
         showCancelButton: true,
         confirmButtonText: 'Yes',
         cancelButtonText: 'No',
+        timer: 5000,
         reverseButtons: true
       }).then((result) => {
         if (result.isConfirmed) {
@@ -92,10 +93,8 @@ export default {
             'Deleted!',
             'Your file has been deleted.',
             'success',
+            this.handleDeleteCategory(category),
           )
-            window.location.reload()
-          this.handleDeleteCategory(category)
-
         } else if (
           /* Read more about handling dismissals below */
           result.dismiss === Swal.DismissReason.cancel
@@ -106,6 +105,7 @@ export default {
             'error'
           )
         }
+        window.location.reload();
       })
     }
   }

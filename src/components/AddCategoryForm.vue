@@ -1,7 +1,7 @@
 <template>
     <div class="form AddCategoryForm col-lg-4">
 
-        <form @submit.prevent="handleAddCategory()">
+        <form @submit.prevent="handleChecking()">
         <div class="input-box">
             <p class="form-label">New Category Name</p>
             <p><input type="text" v-model.trim="categoryName" class="form-control" required></p>
@@ -21,6 +21,7 @@
 
 <script>
 const axios = require('axios').default;
+const Swal = require('sweetalert2')
 
 export default {
     name: 'addCategoryForm',
@@ -37,6 +38,23 @@ export default {
         this.getAllRestaurants();
     },
     methods: {
+        handleChecking() {
+            Swal.fire({
+                title: 'Do you want to add new category?',
+                showDenyButton: true,
+                confirmButtonText: 'Add',
+                denyButtonText: `Don't add`,
+            }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                    this.handleAddCategory()
+                    Swal.fire('Created!', '', 'success')
+                } else if (result.isDenied) {
+                    Swal.fire('Category is not created', '', 'info')
+                }
+                this.$router.push('/category')
+            })
+        },
         handleAddCategory() {
             axios({
                 method: 'POST',
