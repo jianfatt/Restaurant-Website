@@ -13,13 +13,6 @@ import CategoryView from '../views/CategoryView.vue'
 
 Vue.use(VueRouter)
 
-let isLogin = localStorage.getItem('token')
-
-function removeQueryParams(to) {
-  if (Object.keys(to.query).length)
-    return { path: to.path, query: {}, hash: to.hash }
-}
-
 const routes = [
   {
     path: '/',
@@ -37,27 +30,42 @@ const routes = [
   {
     path: '/login',
     name: 'login',
-    component: LoginView
+    component: LoginView,
+    meta: {
+      isAuth: true
+    }
   },
   {
     path: '/register',
     name: 'register',
-    component: RegisterView
+    component: RegisterView,
+    meta: {
+      isAuth: true
+    }
   },
   {
     path: '/all-restaurant/',
     name: 'all-restaurant',
     component: AllRestaurantView,
+    meta: {
+      isNeededAuth: true
+    }
   },
   {
     path: '/add-restaurant',
     name: 'add-restaurant',
     component: AddRestaurantView,
+    meta: {
+      isNeededAuth: true
+    }
   },
   {
     path: '/edit-restaurant/:id',
     name: 'edit-restaurant',
     component: EditRestaurantView,
+    meta: {
+      isNeededAuth: true
+    }
   },
   {
     path: '/restaurant/:id',
@@ -68,18 +76,34 @@ const routes = [
     path: '/add-category',
     name: 'add-category',
     component: AddCategoryView,
+    meta: {
+      isNeededAuth: true
+    }
   },
   {
     path: '/edit-category/:id',
     name: 'edit-category',
     component: EditCategoryView,
+    meta: {
+      isNeededAuth: true
+    }
   },
   {
     path: '/category',
     name: 'category',
     component: CategoryView,
+    meta: {
+      isNeededAuth: true
+    }
   },
 ]
+
+let isLogin = localStorage.getItem('token')
+
+function removeQueryParams(to) {
+  if (Object.keys(to.query).length)
+    return { path: to.path, query: {}, hash: to.hash }
+}
 
 const router = new VueRouter({
   mode: 'history',
@@ -88,16 +112,12 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  if ((to.name == 'category' || to.name == 'all-restaurant' || to.name == 'add-restaurant' || to.name == 'add-category') && !isLogin){
-    alert('Please login to view this page')
-    next({ name: 'login' })
-  }
-  if ((to.name == 'edit-category' || to.name == 'edit-restaurant') && !isLogin){
+  if(to.meta.isNeededAuth && !isLogin) {
     [removeQueryParams]
     alert('Please login to view this page')
     next({ name: 'login' })
   }
-  if ((to.name == 'login' || to.name == 'register') && isLogin){
+  if (to.meta.isAuth  && isLogin){
     alert('You had already logged in')
     next({ name: 'home' })
   }

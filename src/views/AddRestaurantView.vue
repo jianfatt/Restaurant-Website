@@ -1,6 +1,6 @@
 <template>
 <div class="crud-page">
-<p class="btn btn-sm btn-outline-dark back"><router-link class="back-link" :to="{ path: '/all-restaurant' }">Back</router-link></p>
+<div class="back-btn col-4"><router-link class="btn btn-sm btn-outline-dark back-link" :to="{ path: '/all-restaurant' }">Back</router-link></div>
 <h1 class="header">Add New Restaurant</h1>
 <addRestaurantForm></addRestaurantForm>
 </div>

@@ -1,6 +1,6 @@
 <template>
 <div class="category">
-<a class="btn btn-sm btn-outline-dark previous-page-link" @click="$router.back()">Back</a>
+<div class="back-btn col-10"><span class="btn btn-sm btn-outline-dark" @click="$router.back()">Back</span></div>
 <categoryTable class="category-table col-10"></categoryTable>
 </div>
 </template>
@@ -17,11 +17,9 @@ export default {
 </script>
 
 <style>
-  .previous-page-link{
-    display: block;
-    margin: 20px 0;
-    text-align: left;
-    text-decoration: none;
+  .back-btn{
+    margin: auto;
+    padding: 20px 0;
   }
 
   .previous-page-link:hover {

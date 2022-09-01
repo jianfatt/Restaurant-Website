@@ -6,15 +6,15 @@
     <div class="restaurant-card row">
       <card class="col-12 col-md-6 col-lg-4" :restaurant="restaurant" v-for="restaurant in restaurantList"></card>
     </div>
-    <nav aria-label="Page navigation example" class="home-pagination">
+    <nav v-if="restaurantList != ''" aria-label="Page navigation example" class="home-pagination">
       <ul class="pagination">
         <li class="page-item">
           <span class="page-link" aria-label="Previous" @click="handlePreviousPage()">
             <span aria-hidden="true">&laquo;</span>
           </span>
         </li>
-        <li class="page-item" v-for="page in pageList.pageCount"><span class="page-link" @click="handlePage(page)">{{
-             page  }}</span></li>
+        <li class="page-item" v-for="page in pageList.pageCount" :class="{ active: page == currentPage }"><span
+            class="page-link" @click="handlePage(page)">{{  page  }}</span></li>
         <li class="page-item">
           <span class="page-link" aria-label="Next" @click="handleNextPage()">
             <span aria-hidden="true">&raquo;</span>
@@ -99,12 +99,20 @@ export default {
         this.currentPage += 1
         this.getAllRestaurant()
       }
+      else if(this.currentPage >= this.pageList.pageCount){
+        this.currentPage = 1
+        this.getAllRestaurant() 
+      }
       console.log('Next Number', this.currentPage)
     },
     handlePreviousPage() {
       if (this.currentPage > 1) {
         this.currentPage -= 1
         this.getAllRestaurant()
+      }
+      else if(this.currentPage <= 1){
+        this.currentPage = this.pageList.pageCount
+        this.getAllRestaurant() 
       }
       console.log('Previous Number', this.currentPage)
     }
@@ -114,13 +122,11 @@ export default {
 
 <style>
 .home {
-  width: 100%;
   height: 100vh;
   background-image: linear-gradient(to right, #434343, #000000);
 }
 
-.restaurant-card {
-  width: 100vw;
+.restaurant-card{
   background-image: linear-gradient(to right, #434343, #000000);
 }
 
@@ -130,7 +136,21 @@ export default {
   text-align: center;
 }
 
-.home-pagination{
+.home-pagination {
   background: gray;
+  width: 100%;
+}
+
+.pagination{
+  margin: 0;
+}
+
+.page-item{
+  width: 70px;
+  text-align: center;
+}
+
+.page-item:hover {
+  cursor: pointer;
 }
 </style>

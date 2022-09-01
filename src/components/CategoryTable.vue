@@ -28,6 +28,23 @@
         </tbody>
       </table>
     </div>
+
+    <nav aria-label="Page navigation example" class="table-pagination">
+      <ul class="pagination">
+        <li class="page-item">
+          <span class="page-link" aria-label="Previous" @click="handlePreviousPage()">
+            <span aria-hidden="true">&laquo;</span>
+          </span>
+        </li>
+        <li class="page-item" v-for="page in pageList.pageCount" :class="{ active: page == currentPage }"><span
+            class="page-link" @click="handlePage(page)">{{  page  }}</span></li>
+        <li class="page-item">
+          <span class="page-link" aria-label="Next" @click="handleNextPage()">
+            <span aria-hidden="true">&raquo;</span>
+          </span>
+        </li>
+      </ul>
+    </nav>
   </div>
 </template>
 
@@ -41,6 +58,8 @@ export default {
     return {
       categoryList: [],
       deleteCategory: [],
+      pageList: [],
+      currentPage: 1,
       api_url: process.env.VUE_APP_API_URL,
     }
   },
@@ -51,10 +70,14 @@ export default {
     getAllCategories() {
       axios({
         method: 'GET',
-        url: this.api_url + "/api/categories",
+        url: this.api_url + "/api/categories?pagination[page]=" + this.currentPage + "&pagination[pageSize]=5",
+        data: {
+          page: this.currentPage
+        }
       })
         .then(response => {
           this.categoryList = response.data.data;
+          this.pageList = response.data.meta.pagination;
           console.log("All Categories", response.data.data);
         })
     },
@@ -67,6 +90,7 @@ export default {
         .then(response => {
           this.deleteCategory = response;
           console.log("Deleted", response);
+          this.getAllCategories()
         })
     },
     handleChecking(category) {
@@ -85,28 +109,68 @@ export default {
         showCancelButton: true,
         confirmButtonText: 'Yes',
         cancelButtonText: 'No',
-        timer: 5000,
-        reverseButtons: true
       }).then((result) => {
         if (result.isConfirmed) {
-          swalWithBootstrapButtons.fire(
-            'Deleted!',
-            'Your file has been deleted.',
-            'success',
+          swalWithBootstrapButtons.fire({
+            title: 'Deleted!',
+            text: 'Your file has been deleted.',
+            icon: 'success',
+            timer: 1000,
+          },
+            this.actionTimer(),
             this.handleDeleteCategory(category),
           )
         } else if (
           /* Read more about handling dismissals below */
           result.dismiss === Swal.DismissReason.cancel
         ) {
-          swalWithBootstrapButtons.fire(
-            'Cancelled',
-            'Your imaginary file is safe :)',
-            'error'
+          swalWithBootstrapButtons.fire({
+            title: 'Cancelled',
+            tetx: 'Your imaginary file is safe :)',
+            icon: 'error',
+            timer: 1000,
+          },
+            this.actionTimer()
           )
         }
-        window.location.reload();
       })
+    },
+    actionTimer() {
+      Swal.fire({
+        didOpen: () => {
+          Swal.showLoading()
+        },
+        willClose: () => {
+          clearInterval(timerInterval)
+        }
+      })
+    },
+    handlePage(page) {
+      this.currentPage = page
+      this.getAllCategories();
+      console.log('Current Number', this.currentPage)
+    },
+    handleNextPage() {
+      if (this.currentPage < this.pageList.pageCount) {
+        this.currentPage += 1
+        this.getAllCategories();
+      }
+      else if (this.currentPage >= this.pageList.pageCount) {
+        this.currentPage = 1
+        this.getAllCategories();
+      }
+      console.log('Next Number', this.currentPage)
+    },
+    handlePreviousPage() {
+      if (this.currentPage > 1) {
+        this.currentPage -= 1
+        this.getAllCategories();
+      }
+      else if (this.currentPage <= 1) {
+        this.currentPage = this.pageList.pageCount
+        this.getAllCategories();
+      }
+      console.log('Previous Number', this.currentPage)
     }
   }
 }

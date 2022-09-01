@@ -47,10 +47,24 @@ export default {
             }).then((result) => {
                 /* Read more about isConfirmed, isDenied below */
                 if (result.isConfirmed) {
+                    Swal.fire({
+                        title:'Created!', 
+                        text: '', 
+                        icon: 'success',
+                        timer:1000,
+                    },
+                    this.actionTimer(),
                     this.handleAddCategory()
-                    Swal.fire('Created!', '', 'success')
+                    )
                 } else if (result.isDenied) {
-                    Swal.fire('Category is not created', '', 'info')
+                    Swal.fire({
+                        title: 'Category is not created', 
+                        text: '', 
+                        icon: 'info',
+                        timer: 1000,
+                    },
+                    this.actionTimer(),
+                    )
                 }
                 this.$router.push('/category')
             })
@@ -82,6 +96,16 @@ export default {
                     this.restaurantList = response.data.data;
                     console.log("All Restaurants", response.data.data);
                 })
+        },
+        actionTimer() {
+            Swal.fire({
+                didOpen: () => {
+                    Swal.showLoading()
+                },
+                willClose: () => {
+                    clearInterval(timerInterval)
+                }
+            })
         },
     }
 }

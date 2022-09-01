@@ -1,6 +1,6 @@
 <template>
 <div class="crud-page">
-<p class="btn btn-sm btn-outline-dark back"><router-link class="back-link" :to="{ path: '/category' }">Back</router-link></p>
+<div class="back-btn col-4"><router-link class="btn btn-sm btn-outline-dark back-link" :to="{ path: '/category' }">Back</router-link></div>
 <h1 class="header">Add New Category</h1>
 <addCategoryForm></addCategoryForm>
 </div>

@@ -1,6 +1,6 @@
 <template>
 <div class="restaurant">
-<a class="btn btn-sm btn-outline-dark previous-page-link" @click="$router.back()">Back</a>
+  <div class="back-btn col-10"><span class="btn btn-sm btn-outline-dark" @click="$router.back()">Back</span></div>
 <restaurantTable class=" restaurant-table col-10"></restaurantTable>
 </div>
 </template>

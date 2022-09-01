@@ -48,18 +48,30 @@ export default {
             Swal.fire({
                 title: 'Do you want to save the changes?',
                 showDenyButton: true,
-                showCancelButton: true,
                 confirmButtonText: 'Save',
                 denyButtonText: `Don't save`,
             }).then((result) => {
                 /* Read more about isConfirmed, isDenied below */
                 if (result.isConfirmed) {
+                    Swal.fire({
+                        title: 'Saved!', 
+                        text: '', 
+                        icon: 'success',
+                        timer:1000,
+                    },
+                    this.actionTimer(),
                     this.handleEditCategory()
-                    Swal.fire('Saved!', '', 'success')
+                    )
                     this.$router.push('/category')
                 } else if (result.isDenied) {
-                    Swal.fire('Changes are not saved', '', 'info')
-                    this.$router.push('/category')
+                    Swal.fire({
+                        title: 'Changes are not saved',
+                        text: '',
+                        icon: 'info',
+                        timer:1000,
+                    },
+                    this.actionTimer(),
+                    )
                 }
             })
         },
@@ -104,6 +116,16 @@ export default {
                     console.log("All Restaurants", response.data.data);
                 })
         },
+        actionTimer() {
+            Swal.fire({
+                didOpen: () => {
+                    Swal.showLoading()
+                },
+                willClose: () => {
+                    clearInterval(timerInterval)
+                }
+            })
+        }
     }
 }
 </script>

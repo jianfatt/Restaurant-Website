@@ -22,9 +22,9 @@ const Swal = require('sweetalert2')
 axios.interceptors.request.use(function (config) {
   // Do something before request is sent
   const token = localStorage.getItem('token');
-        if(token) {
-            config.headers.common.Authorization = 'Bearer ' + token;
-        }
+  if (token) {
+    config.headers.common.Authorization = 'Bearer ' + token;
+  }
   return config;
 }, function (error) {
   // Do something with request error
@@ -32,96 +32,77 @@ axios.interceptors.request.use(function (config) {
 });
 
 
-// Add a 400 response interceptor
+// Add response interceptor
 axios.interceptors.response.use(function (response) {
   return response;
 }, function (error) {
   if (400 === error.response.status) {
-      Swal.fire({
-        title: 'Error!',
-        html: '<p>This Name Has Been Taken.</p>' + 'Please Try Again',
-        icon: 'error',
-        confirmButtonText:'OK'
-      });
-  } else {
-      return Promise.reject(error);
+    Swal.fire({
+      title: 'Error!',
+      html: '<p>This Name Has Been Taken.</p>' + 'Please Try Again',
+      icon: 'error',
+      confirmButtonText: 'OK'
+    });
   }
-});
 
-// Add a 401 response interceptor
-axios.interceptors.response.use(function (response) {
-  return response;
-}, function (error) {
   if (401 === error.response.status) {
-      Swal({
-          title: "Session Expired",
-          text: "Your session has expired. Would you like to be redirected to the login page?",
-          type: "warning",
-          showCancelButton: true,
-          confirmButtonText: "Yes",
-          closeOnConfirm: false
-      }, function(){
-          window.location = '/login';
-      });
-  } else {
-      return Promise.reject(error);
+    Swal({
+      title: "Session Expired",
+      text: "Your session has expired. Would you like to be redirected to the login page?",
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes",
+      closeOnConfirm: false
+    }, function () {
+      window.location = '/login';
+    });
   }
-});
 
-// Add a 403 response interceptor
-axios.interceptors.response.use(function (response) {
-  return response;
-}, function (error) {
+  if (401 === error.response.status) {
+    Swal({
+      title: "Session Expired",
+      text: "Your session has expired. Would you like to be redirected to the login page?",
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes",
+      closeOnConfirm: false
+    }, function () {
+      window.location = '/login';
+    });
+  }
+
   if (403 === error.response.status) {
-      Swal({
-          title: "Forbidden",
-          text: "This account is forbidden to do this action.",
-          type: "warning",
-          showCancelButton: true,
-          confirmButtonText: "Yes",
-          closeOnConfirm: false
-      }, function(){
-          window.location = '/';
-      });
-  } else {
-      return Promise.reject(error);
+    Swal({
+      title: "Forbidden",
+      text: "This account is forbidden to do this action.",
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonText: "OK",
+      closeOnConfirm: false
+    });
   }
-});
 
-// Add a 404 response interceptor
-axios.interceptors.response.use(function (response) {
-  return response;
-}, function (error) {
   if (404 === error.response.status) {
-      Swal({
-          title: "Error",
-          text: "Error not found.",
-          type: "warning",
-          showCancelButton: true,
-          confirmButtonText: "Yes",
-          closeOnConfirm: false
-      }, function(){
-          window.location = '/';
-      });
-  } else {
-      return Promise.reject(error);
+    Swal({
+      title: "Error",
+      text: "Error not found.",
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonText: "OK",
+      closeOnConfirm: false
+    });
   }
-});
 
-// Add a 500 response interceptor
-axios.interceptors.response.use(function (response) {
-  return response;
-}, function (error) {
   if (500 === error.response.status) {
-      Swal({
-          title: "Internal Server Error",
-          text: "Please try again.",
-          type: "warning",
-          showCancelButton: true,
-          confirmButtonText: "Yes",
-          closeOnConfirm: false
-      });
+    Swal({
+      title: "Internal Server Error",
+      text: "Please try again.",
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonText: "OK",
+      closeOnConfirm: false
+    });
   } else {
-      return Promise.reject(error);
+    return Promise.reject(error);
   }
 });

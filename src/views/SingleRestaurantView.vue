@@ -71,7 +71,7 @@
                         </div>
                     </div>
                 </div>
-                <p v-show="isLogin" class="col-lg-9"><router-link class="btn btn-sm btn-primary" :to="{ path: '/edit-restaurant/' + restaurant.id }">Edit</router-link></p>
+                <p v-show="isLogin" class="col-lg-9"><router-link class="btn btn-sm btn-primary" :to="{ path: '/edit-restaurant/' + this.id }">Edit</router-link></p>
     </div>
     </div>
 </template>
@@ -130,9 +130,10 @@ export default {
 .single-restaurant {
     margin: 0;
     width: 100%;
-    height: 100vh;
+    height: 100%;
     text-align: justify;
-    
+    background-image: linear-gradient(to right, #434343, #000000);
+    color: white;
 }
 
 .description {
@@ -153,6 +154,7 @@ export default {
     margin: 0 10px 10px 0;
     width: 100px;
     height: 100px;
+    background: white;
 }
 
 .menu-carousel-image{
@@ -181,5 +183,9 @@ export default {
 
 .info {
     font-weight: 500;
+}
+
+.modal-title{
+    color: black;
 }
 </style>
