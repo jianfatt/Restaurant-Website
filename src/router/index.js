@@ -111,14 +111,26 @@ const router = new VueRouter({
   routes
 })
 
+const Swal = require('sweetalert2')
+
 router.beforeEach((to, from, next) => {
   if(to.meta.isNeededAuth && !isLogin) {
     [removeQueryParams]
-    alert('Please login to view this page')
+    Swal.fire({
+      icon: 'warning',
+      title: 'Please login to view this page',
+      showConfirmButton: false,
+      timer: 1500
+    })
     next({ name: 'login' })
   }
   if (to.meta.isAuth  && isLogin){
-    alert('You had already logged in')
+    Swal.fire({
+      icon: 'info',
+      title: 'You had already logged in',
+      showConfirmButton: false,
+      timer: 1500
+    })
     next({ name: 'home' })
   }
   else next()
